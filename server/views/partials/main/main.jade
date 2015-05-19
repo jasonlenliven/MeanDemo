@@ -1,0 +1,16 @@
+.container
+    .jumbotron
+        h1 MeanDemo
+        p Welcome to MeanDemo. My first web application developed on the MEAN stack, which includes mongoDb, Express, AngularJS, and NodeJS.
+
+    .row
+        .col-md-3
+            div(ng-include="'/partials/main/component_node'")
+        .col-md-3
+            div(ng-include="'/partials/main/component_express'")
+        .col-md-3
+            div(ng-include="'/partials/main/component_angular'")
+        .col-md-3
+            div(ng-include="'/partials/main/component_mongodb'")
+
+
