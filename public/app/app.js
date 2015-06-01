@@ -1,4 +1,4 @@
-angular.module('app', ['ngResource', 'ngRoute']);
+angular.module('app', ['ngResource', 'ngRoute', 'xeditable']);
 
 angular.module('app').config(function ($routeProvider, $locationProvider) {
   var routeRoleChecks = {
@@ -13,8 +13,10 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   });
   $routeProvider
       .when('/', { templateUrl: '/partials/main/main', controller: 'mainController'})
-      .when('/admin/users', { templateUrl: '/partials/admin/user-list',
-        controller: 'userListController', resolve: routeRoleChecks.admin});
+      .when('/schedule/availability/:id?', { templateUrl: '/partials/schedule/member_schedule', controller: 'scheduleController'})
+      .when('/schedule/memberAvailability/:year/:month/:memberId', { templateUrl: '/partials/schedule/member_schedule', controller: 'scheduleController'})
+      .when('/signup', { templateUrl: '/partials/account/signup', controller: 'signupController'})
+      .when('/admin/users', { templateUrl: '/partials/admin/user-list', controller: 'userListController', resolve: routeRoleChecks.admin});
 });
 
 

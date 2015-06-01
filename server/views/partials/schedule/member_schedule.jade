@@ -1,0 +1,48 @@
+.container
+    .well
+        form.form-horizontal(editable-form="", name="availabilityForm", onaftersave="saveMemberAvailability(memberAvailability)")
+            fieldset
+                legend {{memberAvailability.member.firstName}} {{memberAvailability.member.lastName}} availability - {{month}} {{year}}
+                .form-group
+                    .col-md-2
+                        span Days prefer to work
+                    .col-md-10
+                        span(editable-text="memberAvailability.preferWorkDays" e-name="preferWorkDays" onbeforesave="checkData($data)") {{ memberAvailability.preferWorkDays.toString() || 'empty' }}
+                .form-group
+                    .col-md-2
+                        span Days cannot work
+                    .col-md-10
+                        span(editable-text="memberAvailability.noWorkDays" e-name="noWorkDays" onbeforesave="checkData($data)") {{ memberAvailability.noWorkDays.toString() || 'empty' }}
+                .form-group
+                    .col-md-2
+                        span Days prefer to be off
+                    .col-md-10
+                        span(editable-text="memberAvailability.preferOffDays" e-name="preferOffDays" onbeforesave="checkData($data)") {{ memberAvailability.preferOffDays.toString() || 'empty' }}
+                .form-group
+                    .col-md-10.col-md-offset-2
+                        .pull-right
+                            button.btn.btn-default(type="button", ng-disabled="availabilityForm.$waiting", ng-click="availabilityForm.$show()" ng-show="!availabilityForm.$visible") Edit
+                            span(ng-show="availabilityForm.$visible")
+                                button.btn.btn-primary(type="submit", ng-disabled="availabilityForm.$waiting") Save
+                                button.btn.btn-default(type="button", ng-disabled="availabilityForm.$waiting", ng-click="availabilityForm.$cancel()") Cancel
+
+                //.form-group
+                //    label.col-md-2.control-label(for="preferWorkDays") Days prefer to work
+                //    .col-md-10
+                //        input.form-control(name="preferWorkDays", type="text", placeholder="List days which are prefer to work", ng-model="preferWorkDays", readonly=false)
+                //.form-group
+                //    label.col-md-2.control-label(for="noWorkDays") Days cannot work
+                //    .col-md-10
+                //        input.form-control(name="noWorkDays", type="text", placeholder="List days which absolutely can not work", ng-model="noWorkDays", readonly=false)
+                //.form-group
+                //    label.col-md-2.control-label(for="preferOffDays") Days prefer to be off
+                //    .col-md-10
+                //        input.form-control(name="preferOffDays", type="text", placeholder="List days which are prefer to be off", ng-model="preferOffDays", readonly=false)
+                //
+                //
+                //.form-group
+                //    .col-md-10.col-md-offset-2
+                //        .pull-right
+                //            button.btn.btn-primary(ng-click="submit()", ng-disabled="availabilityForm.$invalid") Submit
+                //            | &nbsp;
+                //            a.btn.btn-default(href="/") Cancel

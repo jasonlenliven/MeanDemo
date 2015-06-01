@@ -12,8 +12,6 @@ require('./server/config/mongoose')(config);
 
 require('./server/config/passport')(config);
 
-
-
 require('./server/config/routes')(app);
 
 
