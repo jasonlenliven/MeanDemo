@@ -16,7 +16,7 @@ module.exports = function(app) {
 
   //app.get('/api/member/:id?', members.getMember);
   app.get('/api/members/:id?', members.getMembers);
-  app.get('/api/memberAvailability/:year/:month/:memberId', memberAvailability.getMemberAvailability);
+  app.get('/api/memberAvailability/:memberId/:year?/:month?', memberAvailability.getMemberAvailability);
   app.post('/api/memberAvailability', memberAvailability.saveMemberAvailability);
 
   app.post('/login', auth.authenticate);

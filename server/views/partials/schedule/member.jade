@@ -1,0 +1,10 @@
+.container
+    .well
+        fieldset
+            legend Group
+            table.table
+                .div(ng-repeat="member in members")
+                    a(href="/memberAvailability/{{member.id}}") {{member.name}}
+
+
+
