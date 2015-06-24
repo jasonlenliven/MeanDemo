@@ -1,0 +1,19 @@
+.container
+    .well
+        form.form-horizontal(name="newGroupForm")
+            fieldset
+                legend New Group Information
+                .form-group
+                    label.col-md-2.control-label(for="name") Name
+                    .col-md-10
+                        input.form-control(name="name", type="text", placeholder="Name", ng-model="name", required)
+                .form-group
+                    label.col-md-2.control-label(for="description") Description
+                    .col-md-10
+                        input.form-control(name="description", type="text", placeholder="", ng-model="description")
+                .form-group
+                    .col-md-10.col-md-offset-2
+                        .pull-right
+                            button.btn.btn-primary(ng-click="save()", ng-disabled="newGroupForm.$invalid") Submit
+                            | &nbsp;
+                            a.btn.btn-default(href="/") Cancel

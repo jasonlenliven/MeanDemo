@@ -1,5 +1,11 @@
-angular.module('app').factory('mvMember', function($resource, $q) {
-  return $resource('/api/members/:id', { id: '@_id' });
+angular.module('app').factory('mvGroup', function($resource, $q) {
+  return $resource('/api/groups/:id', { id: '@_id' }, {
+    delete: {
+      method: 'DELETE',
+      url: 'groups/:id',
+      params: {id: '@_id'}
+    }
+  });
 
   //return {
   //  resource: UserResource,

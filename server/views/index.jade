@@ -3,13 +3,13 @@ extends ../includes/layout
 block main-content
     .navbar.navbar-inverse.navbar-fixed-top
         .container
-            .navbar-header
-                a.navbar-brand(href="/") MeanDemo
-                    h6 -Extreme Tech Training
             .navbar-collapse.collapse
                 ul.nav.navbar-nav
                     li
                         a(href="/") Home
+                ul.nav.navbar-nav
+                    li
+                        a(href="/schedule/groups") Schedule
                 div(ng-include="'/partials/account/navbar-login'")
 
     section.content

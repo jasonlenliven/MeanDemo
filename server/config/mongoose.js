@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
     userModel = require('../models/User'),
+    groupModel = require('../models/Group'),
     memberModel = require('../models/Member'),
     memberAvailability = require('../models/MemberAvailability');
 
@@ -13,7 +14,9 @@ module.exports = function (config) {
   });
 
   userModel.createDefaultUsers();
+  groupModel.createDefaultGroups();
   memberModel.createDefaultMembers();
   memberAvailability.createDefaultMemberAvailabilities();
+
 }
 

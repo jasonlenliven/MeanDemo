@@ -16,7 +16,9 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
       .when('/schedule/availability/:id?', { templateUrl: '/partials/schedule/member_schedule', controller: 'scheduleController'})
       .when('/schedule/group/:id/:year/:month', { templateUrl: '/partials/schedule/group_schedule', controller: 'calendarController'})
       .when('/schedule/memberAvailability/:memberId/:year?/:month?', { templateUrl: '/partials/schedule/member_schedule', controller: 'scheduleController'})
-      .when('/schedule/member', { templateUrl: '/partials/schedule/member', controller: 'memberController'})
+      .when('/schedule/member/:groupId', { templateUrl: '/partials/schedule/member', controller: 'memberController'})
+      .when('/schedule/groups', { templateUrl: '/partials/schedule/groups', controller: 'groupController'})
+      .when('/schedule/group_new', { templateUrl: '/partials/schedule/group_new', controller: 'newGroupController'})
       .when('/signup', { templateUrl: '/partials/account/signup', controller: 'signupController'})
       .when('/admin/users', { templateUrl: '/partials/admin/user-list', controller: 'userListController', resolve: routeRoleChecks.admin});
 });

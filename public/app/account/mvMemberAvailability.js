@@ -1,6 +1,6 @@
 angular.module('app').factory('mvMemberAvailability', function($resource, $q) {
-  var resource =  $resource('/api/memberAvailability/:memberId/:year/:month',  {year:'@id', month: '@month' }, {
-    update: {
+  var resource =  $resource('/api/memberAvailability/:memberId/:year/:month',  {}, {
+    update:{
       method: 'PUT'
     }
   });

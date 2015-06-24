@@ -1,0 +1,18 @@
+.container
+    h1 Groups
+    table.table.table-hover.table-striped.table-condensed
+        thead
+        tr
+            th Name
+            th Description
+            th
+            th
+        tbody
+            tr(ng-repeat="group in groups | orderBy: 'name' ")
+                td
+                    a(href="/schedule/groups/{{group._id}}") {{group.name}}
+                td {{group.description}}
+                td
+                    a(href="/schedule/member/{{group._id}}") Members
+                td
+                    button.btn.btn-primary(ng-click="delete(group)") Delete

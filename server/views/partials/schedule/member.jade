@@ -4,7 +4,7 @@
             legend Group
             table.table
                 .div(ng-repeat="member in members")
-                    a(href="/memberAvailability/{{member.id}}") {{member.name}}
+                    a(href="/schedule/memberAvailability/{{member._id}}/{{year}}/{{month}}") {{member.firstName}} {{member.lastName}}
 
 
 
