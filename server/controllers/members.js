@@ -18,3 +18,49 @@ exports.getMembers = function (req, res) {
     });
   }
 };
+
+exports.getMembersByGroup = function (req, res) {
+  var groupId = req.params.groupId;
+  console.log('Get members by Group Id: ' + groupId);
+  if (groupId) {
+    Member.find({group_id:groupId}).exec(function (err, collection) {
+      if(err) {
+        console.log('Cannot find member. Group Id: ' + groupId);
+        res.send({reason:err.toString()});
+      }
+      res.send(collection);
+    });
+  }
+};
+
+exports.createMember = function (req, res) {
+  var data = req.body;
+  Member.create(data, function (err, member) {
+    if (err) {
+      res.status(400);
+      return res.send({reason:err.toString()});
+    }
+    res.send(member);
+  })
+};
+
+exports.deleteMember = function (req, res) {
+  var memberId = req.params.id;
+  console.log('Deleting member with id: ' + memberId);
+  Member.findById(memberId, function (err, member) {
+    if (err) {
+      console.log('Cannot find member. Id: ' + memberId);
+      res.status(404);
+      return res.send({reason: err.toString()});
+    } else {
+      member.remove(function (err) {
+        if (err) {
+          res.status(400);
+          return res.send({reason: err.toString()});
+        }
+
+        return res.send(200);
+      });
+    }
+  });
+};

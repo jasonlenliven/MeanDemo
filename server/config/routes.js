@@ -17,6 +17,9 @@ module.exports = function(app) {
 
   //app.get('/api/member/:id?', members.getMember);
   app.get('/api/members/:id?', members.getMembers);
+  app.get('/api/members/group/:groupId', members.getMembersByGroup);
+  app.post('/api/members', members.createMember);
+  app.delete('/api/members/:id', members.deleteMember);
   app.get('/api/memberAvailability/:memberId/:year?/:month?', memberAvailability.getMemberAvailability);
   app.post('/api/memberAvailability/', memberAvailability.saveMemberAvailability);
 

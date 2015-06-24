@@ -3,8 +3,9 @@ var mongoose = require('mongoose');
 var memberSchema = mongoose.Schema({
   firstName: {type: String, required: '{PATH} is required'},
   lastName: {type: String, required: '{PATH} is required'},
+  email: {type: String, required: '{PATH} is required'},
   prefix: {type: String},
-  group_id: {type: String}
+  group_id: {type: String, required: '{PATH} is required'}
 });
 
 memberSchema.methods = {

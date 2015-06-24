@@ -35,3 +35,6 @@ footer p {
 .toast-success {
   background-color: #000;
 }
+.table tbody tr td {
+  vertical-align: middle;
+}

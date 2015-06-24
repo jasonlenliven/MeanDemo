@@ -1,0 +1,33 @@
+.container
+    .well
+        form.form-horizontal(name="newMemberForm")
+            fieldset
+                legend New Member Information
+                .form-group
+                    label.col-md-2.control-label(for="firstName") First Name
+                    .col-md-10
+                        input.form-control(name="firstName", type="text", placeholder="First Name", ng-model="firstName", required)
+                .form-group
+                    label.col-md-2.control-label(for="lastName") Last Name
+                    .col-md-10
+                        input.form-control(name="lastName", type="text", placeholder="Last Name", ng-model="lastName", required)
+                .form-group
+                    label.col-md-2.control-label(for="prefix") Prefix
+                    .col-md-10
+                        select.form-control(name="prefix", type="select", ng-model="prefix")
+                            option(value='Dr') Dr
+                            option(value='Mr') Mr
+                            option(value='Ms') Ms
+                            option(value='Mrs') Mrs
+                .form-group
+                    label.col-md-2.control-label(for="email") Email
+                    .col-md-10
+                        input.form-control(name="email", type="email", placeholder="Email", ng-model="email", required)
+                .form-group
+                    .col-md-10.col-md-offset-2
+                        .pull-right
+                            button.btn.btn-primary(ng-click="save(false)", ng-disabled="newMemberForm.$invalid") Save
+                            | &nbsp;
+                            button.btn.btn-primary(ng-click="save(true)", ng-disabled="newMemberForm.$invalid") Save and Add another
+                            | &nbsp;
+                            a.btn.btn-default(href="/schedule/member/{{groupId}}") Cancel

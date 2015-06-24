@@ -1,10 +1,18 @@
 .container
-    .well
-        fieldset
-            legend Group
-            table.table
-                .div(ng-repeat="member in members")
+    h1 Members
+    a.pull-right(href="/schedule/member_new?groupId={{groupId}}") Add new member
+    table.table.table-hover.table-striped.table-condensed
+        thead
+            tr
+                th Name
+                th Email
+                th
+        tbody
+            tr(ng-repeat="member in members | orderBy: 'firstName' ")
+                td
                     a(href="/schedule/memberAvailability/{{member._id}}/{{year}}/{{month}}") {{member.firstName}} {{member.lastName}}
-
+                td {{member.email}}
+                td
+                    button.btn.btn-primary(ng-click="delete(member)") Delete
 
 

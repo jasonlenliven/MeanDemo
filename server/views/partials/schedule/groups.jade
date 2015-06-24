@@ -1,12 +1,13 @@
 .container
     h1 Groups
+    a.pull-right(href="/schedule/group_new") Create new group
     table.table.table-hover.table-striped.table-condensed
         thead
-        tr
-            th Name
-            th Description
-            th
-            th
+            tr
+                th Name
+                th Description
+                th Link to members
+                th
         tbody
             tr(ng-repeat="group in groups | orderBy: 'name' ")
                 td

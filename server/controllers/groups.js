@@ -32,7 +32,7 @@ exports.createGroup = function (req, res, next) {
 
 exports.deleteGroup = function (req, res) {
   var groupId = req.params.id;
-  console.log('Deleting group with id: ' + req.body.id);
+  console.log('Deleting group with id: ' + groupId);
   Group.findById(groupId, function(err, group) {
     if(err) {
       console.log('Cannot find group. Id: ' + groupId);
