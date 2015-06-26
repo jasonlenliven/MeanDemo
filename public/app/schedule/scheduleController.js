@@ -1,16 +1,17 @@
-var monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
+var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 angular.module('app').controller('scheduleController', function (
-    $scope, $routeParams, $filter, $http, notifier, mvMemberAvailability) {
+    $scope, $routeParams, $filter, $http, notifier, mvMemberAvailability, $location) {
 
   var d = new Date();
   var month = d.getMonth();
   var year = d.getFullYear();
 
-  if($routeParams.year) { year = $routeParams.year;}
-  if($routeParams.month) { month = $routeParams.month;}
+  if($routeParams.year) { year = parseInt($routeParams.year);}
+  if($routeParams.month) { month = parseInt($routeParams.month);}
+
+  $scope.groupId = $routeParams.groupId;
 
   $scope.memberAvailability = mvMemberAvailability.resource.get(
       { year: year, month: month, memberId: $routeParams.memberId.toString()}, function() {
@@ -30,4 +31,26 @@ angular.module('app').controller('scheduleController', function (
       notifier.error(reason);
     });
   };
+
+  $scope.monthNext = function() {
+    if (month == 11) {
+      year = year + 1;
+      month = 0;
+    } else {
+      month = month + 1;
+    }
+    var newPath = "/schedule/memberAvailability/" + $routeParams.memberId + "/" + year + "/" + month;
+    $location.path(newPath);
+  };
+
+  $scope.monthPrev = function() {
+    if (month == 0) {
+      year = year - 1;
+      month = 11;
+    } else {
+      month = month - 1;
+    }
+    var newPath = "/schedule/memberAvailability/" + $routeParams.memberId + "/" + year + "/" + month;
+    $location.path(newPath);
+  }
 });

@@ -2,7 +2,10 @@
     .well
         form.form-horizontal(editable-form="", name="availabilityForm", onaftersave="saveMemberAvailability(memberAvailability)")
             fieldset
-                legend {{memberAvailability.member.firstName}} {{memberAvailability.member.lastName}} availability - {{month}} {{year}}
+                legend {{memberAvailability.member.firstName}} {{memberAvailability.member.lastName}} availability
+                    button.btn.btn-default.btn-xs.btn-xs-margin-top.pull-right(type="button" ng-click="monthNext()" ng-show="!availabilityForm.$visible") >
+                    span.pull-right.date-fix-width &nbsp; {{month}} {{year}} &nbsp;
+                    button.btn.btn-default.btn-xs.btn-xs-margin-top.pull-right(type="button" ng-click="monthPrev()" ng-show="!availabilityForm.$visible") <
                 .form-group
                     .col-md-2
                         span Days prefer to work
@@ -27,4 +30,4 @@
                                 | &nbsp;
                                 button.btn.btn-default(type="button", ng-disabled="availabilityForm.$waiting", ng-click="availabilityForm.$cancel()") Cancel
                             | &nbsp;
-                            a.btn.btn-default(ng-show="!availabilityForm.$visible" ng-click="goBack()" href="#") Back
+                            a.btn.btn-default(ng-show="!availabilityForm.$visible" href="/schedule/member/{{groupId}}") Back
