@@ -17,6 +17,7 @@ exports.getMemberAvailability = function (req, res) {
           MemberAvailability.create({
             year: year,
             month: month,
+            group_id: member.group_id,
             member: {
               id: member._id,
               firstName: member.firstName,
@@ -36,6 +37,22 @@ exports.getMemberAvailability = function (req, res) {
     } else {
       res.send(memberAvailability);
     }
+  });
+};
+
+exports.getByGroup = function (req, res) {
+  var year = req.params.year;
+  var month = req.params.month;
+  var groupId = req.params.groupId;
+  console.log('Getting availabilites by group. Id: ' + groupId);
+
+  MemberAvailability.find({year:year, month:month, group_id:groupId}, function(err, collection) {
+    if(err) {
+      console.log('Cannot find schedule for group. Id: ' + groupId);
+      res.status(400);
+      return res.send({reason:err.toString()});
+    }
+    res.send(collection);
   });
 };
 

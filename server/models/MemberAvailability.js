@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var memberAvailabilitySchema = mongoose.Schema({
   year: {type: Number, required: '{PATH} is required'},
   month: {type: Number, required: '{PATH} is required'},
+  group_id: {type: String, required: '{PATH} is required'},
   member: {
     id: {type: String, required: '{PATH} is required'},
     firstName: {type: String, required: '{PATH} is required'},
