@@ -15,26 +15,26 @@ angular.module('app').controller('calendarController', function ($scope, mvCalen
     //$scope.events = data;
     //$scope.eventSources = [$scope.events];
 
-    /* config object */
-    $scope.uiConfig = {
-      calendar:{
-        height: 450,
-        editable: true,
-        header:{
-          left: 'title',
-          center: '',
-          right: 'today prev,next'
-        },
-        eventClick: $scope.alertOnEventClick,
-        eventDrop: $scope.alertOnDrop,
-        eventResize: $scope.alertOnResize,
-        eventRender: $scope.eventRender
-      }
-    };
+
 
     //$('.calendar').fullCalendar('refetchEvents');
   });
 
 
-
+  /* config object */
+  $scope.uiConfig = {
+    calendar:{
+      height: 450,
+      editable: true,
+      header:{
+        left: 'title',
+        center: '',
+        right: 'today prev,next'
+      },
+      eventClick: $scope.alertOnEventClick,
+      eventDrop: $scope.alertOnDrop,
+      eventResize: $scope.alertOnResize,
+      eventRender: $scope.eventRender
+    }
+  };
 });
