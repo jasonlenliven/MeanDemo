@@ -1,11 +1,12 @@
 var WEEKDAY_POINTS = 1;
 var WEEKEND_POINTS = 2;
+var NA_POINTS = -100;
 
-angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad) {
+angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDateHelper) {
   var weekdayWorkLoads = [];
   var weekendWorkLoads = new mvWorkLoad();
 
-  var weekdayRanks = [];
+  var dayRanks = [];
   function pickMemberForWeekend(members, day, weekendWorkLoads, schedules){
   };
 
@@ -23,18 +24,26 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad) {
     return true;
   };
 
-  return {
-    getWeekends: function(year, month) {
-      var weekends = [];
-      for (var d = new Date(year, month, 1); d < new Date(year, month+1, 1); d.setDate(d.getDate() + 1)) {
-        if (d.getDay() == 0 || d.getDay() == 6) {
-          weekends.push(d.getDate());
+  function calculateRank(ranks, availabilities, nonavailablilities) {
+    ranks = [];
+    for(var i= 0; i < nonavailablilities.length; i++) {
+      var na = nonavailablilities[i]? nonavailablilities[i].value : null;
+      if (na) {
+        ranks[i] = [];
+        for(var j=0; j < na.length; j++) {
+          ranks[i].push({'key':na[j].id,'value':NA_POINTS});
         }
       }
-      return weekends;
-    },
+    }
+    return ranks;
+  }
+
+  return {
+    calculateRank: calculateRank,
     assignWeekends: function(weekends, availabilities, nonavailablilities, schedules) {
       // get members with weekend availabilities
+      var ranks;
+      calculateRank(ranks, availabilities, nonavailablilities);
       console.log("Assigning weekends");
       for(var i = 0; i < weekends.length; i++) {
         var day = weekends[i] - 1;

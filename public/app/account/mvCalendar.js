@@ -1,6 +1,6 @@
 var colors = ['green', 'orange', 'blue', 'black', 'purple', 'DimGray', 'LightPink', 'Plum', 'silver'];
 
-angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGroupAvailability, mvScheduleGenerator) {
+angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGroupAvailability, mvScheduleGenerator, mvDateHelper) {
   return {
     getEvents: function(groupId, year, month) {
       var dfd = $q.defer();
@@ -9,7 +9,7 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
       var groupAvailabilities = mvGroupAvailability.query({groupId: groupId, year: year, month: month});
 
 
-      var weekends = mvScheduleGenerator.getWeekends(year, month);
+      var weekends = mvDateHelper.getWeekends(year, month);
       console.log(weekends);
 
       var availabilities = [];
@@ -28,7 +28,7 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
           //console.log(availabilities[index].member.id);
           var color = 'green'//colors[index];
           var naColor = 'red';
-          var member = result[index % (colors.length)];
+          var member = result[index];
 
           var title = member.member.prefix + ' ' + member.member.lastName;
           if (member.preferWorkDays[0]) {
@@ -44,7 +44,7 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
                 color: color
               });
 
-              availabilities[dayStart-1].value.push(member);
+              availabilities[dayStart-1].value.push(member.member);
             }
           }
           if (member.noWorkDays[0]) {
@@ -59,7 +59,7 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
                 color: naColor
               });
 
-              nonavailabilities[dayStart-1].value.push(member);
+              nonavailabilities[dayStart-1].value.push(member.member);
             }
           }
 
