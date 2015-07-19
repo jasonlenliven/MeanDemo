@@ -24,12 +24,14 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
       groupAvailabilities.$promise.then(function (result) {
 
         var events = [];
+        var members= [];
         for	(var index = 0; index < result.length; index++) {
+
           //console.log(availabilities[index].member.id);
           var color = 'green'//colors[index];
           var naColor = 'red';
           var member = result[index];
-
+          members.push(member.member);
           var title = member.member.prefix + ' ' + member.member.lastName;
           if (member.preferWorkDays[0]) {
             var preferWorkDays = member.preferWorkDays[0].split(",");
@@ -41,7 +43,7 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
                 title: title,
                 start: new Date(year, month, dayStart),
                 end: new Date(year, month, dayEnd),
-                color: color
+                color: 'orange'
               });
 
               availabilities[dayStart-1].value.push(member.member);
@@ -65,19 +67,20 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
 
 
         }
-        schedules = mvScheduleGenerator.assignWeekends(weekends, availabilities, nonavailabilities, schedules);
+        //schedules = mvScheduleGenerator.assignWeekends(weekends, availabilities, nonavailabilities, schedules, memberCounts);
+        schedules = mvScheduleGenerator.generateSchedule(availabilities, nonavailabilities, schedules, members, year, month);
         for (var j = 0; j < schedules.length; j++) {
           var member = schedules[j];
 
           if (member) {
             var dayStart = j + 1;
             var dayEnd = dayStart + 1;
-            var title = member.member.prefix + ' ' + member.member.lastName;
+            var title = member.prefix + ' ' + member.lastName;
             events.push({
               title: title,
               start: new Date(year, month, dayStart),
               end: new Date(year, month, dayEnd),
-              color: 'orange'
+              color: color
             });
           }
 

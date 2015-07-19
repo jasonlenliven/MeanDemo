@@ -7,9 +7,8 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
   var weekendWorkLoads = new mvWorkLoad();
 
   var dayRanks = [];
-  function pickMemberForWeekend(members, day, weekendWorkLoads, schedules){
-  };
-
+  var dayCounts = {};
+  var averageDayCounts;
 
 
   function isMemberAvailable(member, nonavailablilities, day) {
@@ -24,26 +23,139 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
     return true;
   };
 
-  function calculateRank(ranks, availabilities, nonavailablilities) {
-    ranks = [];
-    for(var i= 0; i < nonavailablilities.length; i++) {
-      var na = nonavailablilities[i]? nonavailablilities[i].value : null;
-      if (na) {
-        ranks[i] = [];
-        for(var j=0; j < na.length; j++) {
-          ranks[i].push({'key':na[j].id,'value':NA_POINTS});
-        }
+  function initializeRanks(availabilities, members) {
+    var ranks = [];
+    for (var i = 0; i < availabilities.length; i++) {
+      ranks[i] = [];
+      for (var j = 0; j < members.length; j++) {
+        ranks[i].push({'key': members[j].id, 'value': 0});
       }
     }
     return ranks;
   }
 
+  function initializeDayCounts(members) {
+    for (var i = 0; i < members.length; i++) {
+      dayCounts[members[i].id] = 0;
+    }
+    return dayCounts;
+  }
+
+  function findByKey(arr, key) {
+    for(var j=0; j < arr.length; j++) {
+      if (arr[j].key == key) {
+        return j;
+      }
+    }
+    return -1;
+  }
+
+  function calculateRank(ranks, availabilities, nonavailablilities) {
+
+    for(var i= 0; i < nonavailablilities.length; i++) {
+      if (!ranks[i]) {
+        ranks[i] = [];
+      }
+
+      var na = nonavailablilities[i]? nonavailablilities[i].value : null;
+      if (na) {
+        for(var j=0; j < na.length; j++) {
+          var id = na[j].id;
+          var index = findByKey(ranks[i], id);
+          if (index >= 0) {
+            ranks[i][index].value += NA_POINTS;
+          } else{
+            ranks[i].push({key:id, value: NA_POINTS});
+          }
+          sortRanks(ranks[i]);
+        }
+      }
+
+      var avail = availabilities[i]? availabilities[i].value : null;
+      if (avail) {
+        for(var j=0; j < avail.length; j++) {
+          var id = avail[j].id;
+          var index = findByKey(ranks[i], id);
+          if (index >= 0) {
+            ranks[i][index].value += 1;
+          } else{
+            ranks[i].push({key:id, value: 1});
+          }
+          sortRanks(ranks[i]);
+        }
+      }
+    }
+
+    return ranks;
+  }
+
+  function sortRanks(ranks) {
+    ranks.sort(function(a,b){
+      return b.value - a.value;
+    });
+
+    return ranks;
+  }
+
+  function getMember(members, memberId) {
+    for(var i = 0; i < members.length; i++) {
+      if (members[i].id == memberId) {
+        return members[i];
+      }
+    }
+    return null;
+  }
+
+  function incrementRank(member, value, startIndex) {
+    for(var i = startIndex; i < dayRanks.length; i++) {
+      var index = findByKey(dayRanks[i], member.id);
+      dayRanks[i][index].value = dayRanks[i][index].value + value;
+      sortRanks(dayRanks[i]);
+    }
+  }
+
+
+
+  function updateRanks(member, date) {
+    dayCounts[member.id]++;
+
+    // if work 2 consecutives week end, decrement rank
+    if (mvDateHelper.isWeekend(date)){
+      var nextDate = new Date();
+      nextDate.setDate(date.getDate() + 1);
+      if (!mvDateHelper.isWeekend(nextDate)) {
+        incrementRank(member, -1, date.getDay());
+      }
+    }
+
+    // if work enough days, decrement rank
+    if(dayCounts[member.id] >= averageDayCounts) {
+      incrementRank(member, -1, date.getDay());
+    }
+  }
+
+  function generateSchedule(availabilities, nonavailablilities, schedules, members, year, month) {
+    dayRanks = initializeRanks(availabilities, members);
+    dayCounts = initializeDayCounts(members);
+    dayRanks = calculateRank(dayRanks, availabilities, nonavailablilities);
+    averageDayCounts = (new Date(year, month, 0)).getDate() / members.length;
+
+    for(var i = 0; i < availabilities.length; i++) {
+      var memberId = dayRanks[i][0]? dayRanks[i][0].key : 0;
+      schedules[i] = getMember(members, memberId);
+      updateRanks(schedules[i], new Date(year, month, i+1));
+
+    }
+    return schedules;
+  }
+
   return {
     calculateRank: calculateRank,
-    assignWeekends: function(weekends, availabilities, nonavailablilities, schedules) {
+    sortRanks: sortRanks,
+    generateSchedule: generateSchedule,
+    assignWeekends: function(weekends, availabilities, nonavailablilities, schedules, memberCounts) {
+      dayRanks = calculateRank(dayRanks, availabilities, nonavailablilities);
       // get members with weekend availabilities
-      var ranks;
-      calculateRank(ranks, availabilities, nonavailablilities);
       console.log("Assigning weekends");
       for(var i = 0; i < weekends.length; i++) {
         var day = weekends[i] - 1;
@@ -56,7 +168,7 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
               var previousMember = schedules[previousWeekend];
               if(isMemberAvailable(previousMember, nonavailablilities, day)){
                 schedules[day] = previousMember;
-                weekendWorkLoads.addWeekendWorkLoad(previousMember.member.id);
+                weekendWorkLoads.addWeekendWorkLoad(previousMember.id);
 
               }
             }
@@ -68,7 +180,7 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
             var m = availMembers[0];
             if (m) {
               schedules[day] = m;
-              weekendWorkLoads.addWeekendWorkLoad(m.member.id);
+              weekendWorkLoads.addWeekendWorkLoad(m.id);
             }
           }
 
