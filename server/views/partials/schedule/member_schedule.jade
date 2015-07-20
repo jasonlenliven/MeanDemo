@@ -10,17 +10,17 @@
                     .col-md-2
                         span Days prefer to work
                     .col-md-10
-                        span(editable-text="memberAvailability.preferWorkDays" e-name="preferWorkDays" onbeforesave="checkData($data)") {{ memberAvailability.preferWorkDays.toString() || 'empty' }}
+                        span(editable-text="memberAvailability.preferWorkDays" e-name="preferWorkDays" onbeforesave="checkData($data, 'preferWorkDays')") {{ memberAvailability.preferWorkDays.length?  memberAvailability.preferWorkDays.toString(): 'empty' }}
                 .form-group
                     .col-md-2
                         span Days cannot work
                     .col-md-10
-                        span(editable-text="memberAvailability.noWorkDays" e-name="noWorkDays" onbeforesave="checkData($data)") {{ memberAvailability.noWorkDays.toString() || 'empty' }}
+                        span(editable-text="memberAvailability.noWorkDays" e-name="noWorkDays" onbeforesave="checkData($data, 'noWorkDays')") {{ memberAvailability.noWorkDays.length? memberAvailability.noWorkDays.toString() : 'empty' }}
                 .form-group
                     .col-md-2
                         span Days prefer to be off
                     .col-md-10
-                        span(editable-text="memberAvailability.preferOffDays" e-name="preferOffDays" onbeforesave="checkData($data)") {{ memberAvailability.preferOffDays.toString() || 'empty' }}
+                        span(editable-text="memberAvailability.preferOffDays" e-name="preferOffDays" onbeforesave="checkData($data, 'preferOffDays')") {{ memberAvailability.preferOffDays.length? memberAvailability.preferOffDays.toString() : 'empty' }}
                 .form-group
                     .col-md-10.col-md-offset-2
                         .pull-right

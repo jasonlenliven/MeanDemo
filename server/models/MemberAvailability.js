@@ -10,9 +10,9 @@ var memberAvailabilitySchema = mongoose.Schema({
     lastName: {type: String, required: '{PATH} is required'},
     prefix: {type: String}
   },
-  preferWorkDays: {type: Array},
-  noWorkDays: {type: Array},
-  preferOffDays: {type: Array}
+  preferWorkDays: {type: Array, "default" : [] },
+  noWorkDays: {type: Array, "default" : [] },
+  preferOffDays: {type: Array, "default" : [] }
 
 });
 

@@ -33,8 +33,8 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
           var member = result[index];
           members.push(member.member);
           var title = member.member.prefix + ' ' + member.member.lastName;
-          if (member.preferWorkDays[0]) {
-            var preferWorkDays = member.preferWorkDays[0].split(",");
+          if (member.preferWorkDays) {
+            var preferWorkDays = member.preferWorkDays;
 
             for (var j = 0; j < preferWorkDays.length; j++) {
               var dayStart = parseInt(preferWorkDays[j]);
@@ -49,8 +49,8 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
               availabilities[dayStart-1].value.push(member.member);
             }
           }
-          if (member.noWorkDays[0]) {
-            var notAvailDays = member.noWorkDays[0].split(",");
+          if (member.noWorkDays) {
+            var notAvailDays = member.noWorkDays;
             for (var j = 0; j < notAvailDays.length; j++) {
               var dayStart = parseInt(notAvailDays[j]);
               var dayEnd = dayStart + 1;
