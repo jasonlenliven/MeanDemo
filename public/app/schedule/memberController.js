@@ -11,13 +11,13 @@ angular.module('app').controller('memberController', function($scope, mvMember, 
 
   $scope.delete = function(item) {
     if ($window.confirm('Are you sure you want to delete this member?')) {
-      var memberToDelete = item;
-
-      memberToDelete.$remove().then(function () {
-        notifier.notify('Member deleted!');
-        $scope.members.splice($scope.members.indexOf(item), 1);
-      }, function (response) {
-        notifier.error(response.data.reason);
+      mvMember.resource.get({ id:item._id }, function(data) {
+        data.$remove({id:item._id}).then(function () {
+          notifier.notify('Member deleted!');
+          $scope.members.splice($scope.members.indexOf(item), 1);
+        }, function (response) {
+          notifier.error(response.data.reason);
+        });
       });
     }
   }
