@@ -14,9 +14,9 @@ module.exports = function (config) {
   });
 
   userModel.createDefaultUsers();
-  groupModel.createDefaultGroups();
-  memberModel.createDefaultMembers();
-  memberAvailability.createDefaultMemberAvailabilities();
+  //groupModel.createDefaultGroups();
+  //memberModel.createDefaultMembers();
+  //memberAvailability.createDefaultMemberAvailabilities();
 
 }
 

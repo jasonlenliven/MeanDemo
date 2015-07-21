@@ -6,7 +6,7 @@ exports.getGroups = function (req, res) {
   var groupId = req.params.id;
   console.log('Group Id: ' +  groupId);
   if (groupId) {
-    Member.findById(groupId, function(err, group) {
+    Group.findById(groupId, function(err, group) {
       if(err) {
         console.log('Cannot find group. Id: ' + groupId);
       }
@@ -49,4 +49,16 @@ exports.deleteGroup = function (req, res) {
       });
     }
   });
+};
+
+exports.updateGroup = function (req, res) {
+  var groupData = req.body;
+  console.log("updating group. id: " + req.params.id);
+  Group.update({_id:req.params.id}, groupData, function (err, group) {
+    if (err) {
+      console.log(err.toString());
+      return res.send({reason:err.toString()});
+    }
+    res.send(group);
+  })
 };

@@ -4,6 +4,11 @@ angular.module('app').factory('mvGroup', function($resource, $q) {
       method: 'DELETE',
       url: 'groups/:id',
       params: {id: '@_id'}
+    },
+    update: {
+      method: 'PUT',
+      isArray: false,
+      params: {id: '@_id'}
     }
   });
 

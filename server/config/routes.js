@@ -28,6 +28,7 @@ module.exports = function(app) {
   app.get('/api/groups/:id?', groups.getGroups);
   app.post('/api/groups', groups.createGroup);
   app.delete('/api/groups/:id', groups.deleteGroup);
+  app.put('/api/groups/:id', groups.updateGroup);
 
   app.post('/login', auth.authenticate);
   app.post('/logout', function(req, res) {
