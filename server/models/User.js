@@ -27,7 +27,7 @@ function createDefaultUsers() {
     if (colection.length === 0) {
       var salt, hash;
       salt = encrypt.createSalt();
-      hash = encrypt.hashPwd(salt, 'jason');
+      hash = encrypt.hashPwd(salt, 'jason.01!');
       User.create({
         firstName: 'Jason',
         lastName: 'Le',
@@ -37,11 +37,14 @@ function createDefaultUsers() {
         roles: ['admin']
       });
       salt = encrypt.createSalt();
-      hash = encrypt.hashPwd(salt, 'tim');
-      User.create({firstName: 'Tim', lastName: 'Cookie', username: 'tcookie', salt: salt, hashed_pwd: hash, roles: []});
+      hash = encrypt.hashPwd(salt, 'Scheduler!');
+      User.create({firstName: 'One', lastName: 'User', username: 'user_1', salt: salt, hashed_pwd: hash, roles: ['group_manager']});
       salt = encrypt.createSalt();
-      hash = encrypt.hashPwd(salt, 'super');
-      User.create({firstName: 'Super', lastName: 'Man', username: 'sman', salt: salt, hashed_pwd: hash});
+      hash = encrypt.hashPwd(salt, 'Scheduler!');
+      User.create({firstName: 'Two', lastName: 'User', username: 'user_2', salt: salt, hashed_pwd: hash, roles: ['group_manager']});
+      salt = encrypt.createSalt();
+      hash = encrypt.hashPwd(salt, 'Scheduler!');
+      User.create({firstName: 'Three', lastName: 'User', username: 'user_3', salt: salt, hashed_pwd: hash, roles: ['group_manager']});
     }
   })
 };

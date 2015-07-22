@@ -4,6 +4,7 @@ angular.module('app').controller('navbarLoginController', function ($scope, $htt
     mvAuth.authenticateUser(username, password).then(function(success) {
       if(success) {
         notifier.notify('You have successfully signed in!');
+        $location.path('/disclaimer');
       } else {
         notifier.notify('Invalid username/password.');
       }

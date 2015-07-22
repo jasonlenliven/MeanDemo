@@ -11,7 +11,8 @@ angular.module('app').factory('identity', function($window, mvUser) {
       return !!this.currentUser;
     },
     isAuthorized: function(role) {
-      return !!this.currentUser && this.currentUser.roles.indexOf('admin') > -1;
+      return !!this.currentUser &&
+          ((this.currentUser.roles.indexOf(role) > -1) || (this.currentUser.roles.indexOf('admin') > -1));
     }
   }
 })

@@ -8,6 +8,9 @@
         .form-group
             input.form-control(type="password", placeholder="Password", ng-model="password")
         button.btn.btn-primary(ng-click="signin(username, password)") Sign In
+    ul.nav.navbar-nav
+        li(ng-show="identity.currentUser.isGroupManager()")
+            a(href="/schedule/groups") Scheduler
     ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
         li.dropdown
         a.dropdown-toggle(href="", data-toggle="dropdown")
