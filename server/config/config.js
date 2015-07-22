@@ -8,7 +8,7 @@ module.exports = {
   },
   production: {
     rootPath: rootPath,
-    db: 'mongodb://jle:meandemo@ds031852.mongolab.com:31852/scheduler',
+    db: 'mongodb://jle:jason.01!@ds029787.mongolab.com:29787/scheduler',
     port: process.env.PORT || 80
   }
 }
