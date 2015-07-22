@@ -7,12 +7,15 @@
             tr
                 th Name
                 th Email
+                th Availabilities
                 th
         tbody
             tr(ng-repeat="member in members | orderBy: 'firstName' ")
                 td
-                    a(href="/schedule/memberAvailability/{{member._id}}/{{year}}/{{month}}?groupId={{groupId}}") {{member.firstName}} {{member.lastName}}
+                    a(href="/schedule/member/{{member._id}}") {{member.firstName}} {{member.lastName}}
                 td {{member.email}}
+                td
+                    a(href="/schedule/memberAvailability/{{member._id}}/{{year}}/{{month}}?groupId={{groupId}}") Availabilities
                 td
                     button.btn.btn-primary(ng-click="delete(member)") Delete
     .pull-right

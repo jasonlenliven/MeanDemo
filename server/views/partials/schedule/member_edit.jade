@@ -1,8 +1,8 @@
 .container
     .well
-        form.form-horizontal(name="newMemberForm")
+        form.form-horizontal(name="editMemberForm")
             fieldset
-                legend New Member Information
+                legend Edit Member Information
                 .form-group
                     label.col-md-2.control-label(for="firstName") First Name
                     .col-md-10
@@ -30,8 +30,6 @@
                 .form-group
                     .col-md-10.col-md-offset-2
                         .pull-right
-                            button.btn.btn-primary(ng-click="save(false)", ng-disabled="newMemberForm.$invalid") Save
+                            button.btn.btn-primary(ng-click="update()", ng-disabled="editMemberForm.$invalid") Save
                             | &nbsp;
-                            button.btn.btn-primary(ng-click="save(true)", ng-disabled="newMemberForm.$invalid") Save and Add another
-                            | &nbsp;
-                            a.btn.btn-default(href="/schedule/member/group/{{groupId}}") Cancel
+                            a.btn.btn-default(href="/schedule/member/group/{{group_id}}") Cancel

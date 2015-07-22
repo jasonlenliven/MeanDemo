@@ -12,6 +12,25 @@
                     .col-md-10
                         input.form-control(name="description", type="text", placeholder="", ng-model="description")
                 .form-group
+                    .col-md-2
+                    .col-md-10.h4 Group Manager
+                .form-group
+                    label.col-md-2.control-label(for="manager_first_name") First Name
+                    .col-md-10
+                        input.form-control(name="manager_first_name", type="text", placeholder="Fist Name", ng-model="manager_first_name", required)
+                .form-group
+                    label.col-md-2.control-label(for="manager_last_name") Last Name
+                    .col-md-10
+                        input.form-control(name="manager_last_name", type="text", placeholder="Last Name", ng-model="manager_last_name", required)
+                .form-group
+                    label.col-md-2.control-label(for="manager_phone") Phone
+                    .col-md-10
+                        input.form-control(name="manager_phone", type="tel", placeholder="XXX-XXX-XXXX", ng-model="manager_phone", required)
+                .form-group
+                    label.col-md-2.control-label(for="manager_email") Email
+                    .col-md-10
+                        input.form-control(name="manager_email", type="email", placeholder="email", ng-model="manager_email", required)
+                .form-group
                     .col-md-10.col-md-offset-2
                         .pull-right
                             button.btn.btn-primary(ng-click="save()", ng-disabled="newGroupForm.$invalid") Submit

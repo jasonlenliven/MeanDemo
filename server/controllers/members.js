@@ -44,6 +44,18 @@ exports.createMember = function (req, res) {
   })
 };
 
+exports.updateMember = function (req, res) {
+  var memberData = req.body;
+  console.log("updating member. id: " + req.params.id);
+  Member.update({_id:req.params.id}, memberData, function (err, member) {
+    if (err) {
+      console.log(err.toString());
+      return res.send({reason:err.toString()});
+    }
+    res.send(member);
+  })
+};
+
 exports.deleteMember = function (req, res) {
   var memberId = req.params.id;
   console.log('Deleting member with id: ' + memberId);

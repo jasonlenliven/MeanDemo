@@ -4,6 +4,11 @@ angular.module('app').factory('mvMember', function($resource, $q) {
       method: 'DELETE',
       url: 'members/:id',
       params: {id: '@_id'}
+    },
+    update: {
+      method: 'PUT',
+      isArray: false,
+      params: {id: '@_id'}
     }
   });
   var memberResourceByGroup = $resource('/api/members/group/:groupId', {groupId: '@groupId' });

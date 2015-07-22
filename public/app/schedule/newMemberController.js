@@ -8,6 +8,7 @@ angular.module('app').controller('newMemberController', function($scope, mvMembe
       lastName: $scope.lastName,
       prefix: $scope.prefix,
       email: $scope.email,
+      phone: $scope.phone,
       group_id: $routeParams.groupId
     };
 
@@ -21,10 +22,12 @@ angular.module('app').controller('newMemberController', function($scope, mvMembe
         $scope.lastName = undefined;
         $scope.prefix = undefined;
         $scope.email = undefined;
+        $scope.phone = undefined;
 
         //$location.path("/schedule/member_new");
       } else {
-        $location.path("/schedule/member");
+        $routeParams.groupId = "";
+        $location.path("/schedule/member/group/" + $scope.groupId);
       }
     }, function (response) {
       notifier.error(response.data.reason);

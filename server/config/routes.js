@@ -20,6 +20,8 @@ module.exports = function(app) {
   app.get('/api/members/group/:groupId', members.getMembersByGroup);
   app.post('/api/members', members.createMember);
   app.delete('/api/members/:id', members.deleteMember);
+  app.put('/api/members/:id', members.updateMember);
+
   app.get('/api/memberAvailability/:memberId/:year?/:month?', memberAvailability.getMemberAvailability);
   app.post('/api/memberAvailability/', memberAvailability.saveMemberAvailability);
 
