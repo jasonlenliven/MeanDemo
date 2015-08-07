@@ -1,8 +1,10 @@
 .container
     .well
         fieldset
-            legend Group Calendar - June 2015
+            legend Group Calendar
             .calendar(ui-calendar="uiConfig.calendar" ng-model="eventSources")
-            .col-md-5.col-md-offset-5.btn-group
+            .col-md-5.col-md-offset-5
+                a.btn.btn-default(href="javascript: window.print()") Print
+                | &nbsp
                 a.btn.btn-default(href="/schedule/groups") Back to Groups
 

@@ -8,9 +8,7 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
       var month = parseInt(month);
       var groupAvailabilities = mvGroupAvailability.query({groupId: groupId, year: year, month: month});
 
-
       var weekends = mvDateHelper.getWeekends(year, month);
-      console.log(weekends);
 
       var availabilities = [];
       var nonavailabilities = [];
@@ -75,12 +73,19 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
           if (member) {
             var dayStart = j + 1;
             var dayEnd = dayStart + 1;
-            var title = member.prefix + ' ' + member.lastName;
+            var title;
+            if (member.prefix) {
+              title = member.prefix + ' ' + member.lastName;
+            } else {
+              title = member.lastName;
+            }
+
             events.push({
               title: title,
               start: new Date(year, month, dayStart),
               end: new Date(year, month, dayEnd),
-              color: color
+              color: color,
+              stick : true
             });
           }
 
