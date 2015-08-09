@@ -1,5 +1,6 @@
 var WEEKDAY_POINTS = 1;
 var WEEKEND_POINTS = 2;
+var AVAIL_POINTS = 5;
 var NA_POINTS = -100;
 
 angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDateHelper) {
@@ -77,9 +78,9 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
           var id = avail[j].id;
           var index = findByKey(ranks[i], id);
           if (index >= 0) {
-            ranks[i][index].value += 1;
+            ranks[i][index].value += AVAIL_POINTS;
           } else{
-            ranks[i].push({key:id, value: 1});
+            ranks[i].push({key:id, value: 0});
           }
           sortRanks(ranks[i]);
         }
@@ -141,10 +142,13 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
     averageDayCounts = (new Date(year, month, 0)).getDate() / members.length;
 
     for(var i = 0; i < availabilities.length; i++) {
-      var memberId = dayRanks[i][0]? dayRanks[i][0].key : 0;
-      schedules[i] = getMember(members, memberId);
-      updateRanks(schedules[i], new Date(year, month, i+1));
-
+      if(dayRanks[i][0] && dayRanks[i][0].value > 0) {
+        var memberId = dayRanks[i][0].key;
+        if (memberId) {
+          schedules[i] = getMember(members, memberId);
+          updateRanks(schedules[i], new Date(year, month, i + 1));
+        }
+      }
     }
     return schedules;
   }
