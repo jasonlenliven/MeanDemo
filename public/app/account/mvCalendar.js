@@ -8,15 +8,15 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
       var month = parseInt(month);
       var groupAvailabilities = mvGroupAvailability.query({groupId: groupId, year: year, month: month});
 
-      var weekends = mvDateHelper.getWeekends(year, month);
-
       var availabilities = [];
       var nonavailabilities = [];
+      var preferOffDays = [];
       var lastDayInMonth = (new Date(year, month + 1, 0)).getDate();
       var schedules = new Array(lastDayInMonth);
       for(var i = 0; i < lastDayInMonth; i++) {
         availabilities.push({key:i, value:[]});
         nonavailabilities.push({key:i, value:[]});
+        preferOffDays.push({key:i, value:[]});
       }
 
       groupAvailabilities.$promise.then(function (result) {
@@ -63,10 +63,26 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
             }
           }
 
+          if (member.preferOffDays) {
+            for (var j = 0; j < member.preferOffDays.length; j++) {
+              var dayStart = parseInt(notAvailDays[j]);
+              var dayEnd = dayStart + 1;
+              //events.push({
+              //  title: title,
+              //  start: new Date(year, month, dayStart),
+              //  end: new Date(year, month, dayEnd),
+              //  color: naColor
+              //});
+
+              preferOffDays[dayStart-1].value.push(member.member);
+            }
+          }
+
 
         }
         //schedules = mvScheduleGenerator.assignWeekends(weekends, availabilities, nonavailabilities, schedules, memberCounts);
-        schedules = mvScheduleGenerator.generateSchedule(availabilities, nonavailabilities, schedules, members, year, month);
+        schedules = mvScheduleGenerator.generateSchedule(availabilities, nonavailabilities, preferOffDays,
+            schedules, members, year, month);
         for (var j = 0; j < schedules.length; j++) {
           var member = schedules[j];
 

@@ -1,6 +1,7 @@
 var WEEKDAY_POINTS = 1;
 var WEEKEND_POINTS = 2;
 var AVAIL_POINTS = 5;
+var PREFER_OFF_POINTS = 1;
 var NA_POINTS = -100;
 
 angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDateHelper) {
@@ -51,7 +52,7 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
     return -1;
   }
 
-  function calculateRank(ranks, availabilities, nonavailablilities) {
+  function calculateRank(ranks, availabilities, nonavailablilities, preferOffDays) {
 
     for(var i= 0; i < nonavailablilities.length; i++) {
       if (!ranks[i]) {
@@ -81,6 +82,18 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
             ranks[i][index].value += AVAIL_POINTS;
           } else{
             ranks[i].push({key:id, value: 0});
+          }
+          sortRanks(ranks[i]);
+        }
+      }
+
+      var preferOff = preferOffDays[i]? preferOffDays[i].value : null;
+      if (preferOff) {
+        for(var j=0; j < preferOff.length; j++) {
+          var id = preferOff[j].id;
+          var index = findByKey(ranks[i], id);
+          if (index >= 0) {
+            ranks[i][index].value -= PREFER_OFF_POINTS;
           }
           sortRanks(ranks[i]);
         }
@@ -135,10 +148,10 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
     }
   }
 
-  function generateSchedule(availabilities, nonavailablilities, schedules, members, year, month) {
+  function generateSchedule(availabilities, nonavailablilities, preferOffDays, schedules, members, year, month) {
     dayRanks = initializeRanks(availabilities, members);
     dayCounts = initializeDayCounts(members);
-    dayRanks = calculateRank(dayRanks, availabilities, nonavailablilities);
+    dayRanks = calculateRank(dayRanks, availabilities, nonavailablilities, preferOffDays);
     averageDayCounts = (new Date(year, month, 0)).getDate() / members.length;
 
     for(var i = 0; i < availabilities.length; i++) {
@@ -156,6 +169,7 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
   return {
     calculateRank: calculateRank,
     sortRanks: sortRanks,
+    initializeRanks: initializeRanks,
     generateSchedule: generateSchedule,
     assignWeekends: function(weekends, availabilities, nonavailablilities, schedules, memberCounts) {
       dayRanks = calculateRank(dayRanks, availabilities, nonavailablilities);

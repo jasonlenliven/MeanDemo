@@ -1,6 +1,6 @@
-angular.module('app').value('moment', moment);
+//angular.module('app').value('moment', moment);
 
-angular.module('app').controller('calendarController', function ($scope, mvCalendar, $routeParams, moment) {
+angular.module('app').controller('calendarController', function ($scope, mvCalendar, $routeParams) {
 
   $scope.events = [];
   $scope.eventSources = [$scope.events];
