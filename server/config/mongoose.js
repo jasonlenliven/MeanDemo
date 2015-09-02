@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
     userModel = require('../models/User'),
     groupModel = require('../models/Group'),
     memberModel = require('../models/Member'),
+    groupScheduleModel = require('../models/GroupSchedule'),
     memberAvailability = require('../models/MemberAvailability');
 
 module.exports = function (config) {

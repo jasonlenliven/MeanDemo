@@ -1,0 +1,22 @@
+.container
+    h1 Schedule Periods
+    a.pull-right(href="/schedule/schedule_period_new/{{groupId}}")
+        span.glyphicon.glyphicon-plus  Create new schedule period
+    table.table.table-hover.table-striped.table-condensed
+        thead
+            tr
+                th From
+                th To
+                th Link to members' availabilities
+                th Link to schedule calendar
+                th
+        tbody
+            tr(ng-repeat="period in periods | orderBy: 'startDate' ")
+                td {{ period.startDate | date : format : timezone}}
+                td {{ period.endDate | date : format : timezone}}
+                td
+                    a(href="/schedule/periodAvailability/{{period.id}}") Members Availabilities
+                td
+                    a(href="/schedule/groupAvailability/{{period.group_id}}/{{period.id}}") Group Schedule
+                td
+                    button.btn.btn-primary(ng-click="delete(period)") Delete

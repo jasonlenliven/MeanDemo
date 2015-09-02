@@ -1,0 +1,19 @@
+.container
+    .well
+        form.form-horizontal(name="newSchedulePeriodForm")
+            fieldset
+                legend New Group Schedule Period
+                .form-group
+                    label.col-md-2.control-label(for="startDate") Period start date
+                    .col-md-2
+                        input.form-control(name="startDate", type="date", placeholder="Start date", ng-model="startDate", required)
+                .form-group
+                    label.col-md-2.control-label(for="endDate") Period end date
+                    .col-md-2
+                        input.form-control(name="endDate", type="date", placeholder="End Date", ng-model="endDate", required=)
+                .form-group
+                    .col-md-10.col-md-offset-2
+                        .pull-right
+                            button.btn.btn-primary(ng-click="save()", ng-disabled="newSchedulePeriodForm.$invalid") Submit
+                            | &nbsp;
+                            a.btn.btn-default(href="/schedule/schedule_periods_new/{{groupId}}") Cancel

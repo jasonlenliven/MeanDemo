@@ -2,7 +2,8 @@ var auth = require('./auth'),
     users = require('../controllers/users'),
     members = require('../controllers/members'),
     memberAvailability = require('../controllers/member_availabilities'),
-    groups = require('../controllers/groups')
+    groups = require('../controllers/groups'),
+    groupSchedules = require('../controllers/group_schedules'),
     mongoose = require('mongoose'),
     User = mongoose.model('User');
 
@@ -31,6 +32,11 @@ module.exports = function(app) {
   app.post('/api/groups', groups.createGroup);
   app.delete('/api/groups/:id', groups.deleteGroup);
   app.put('/api/groups/:id', groups.updateGroup);
+
+  app.get('/api/groups/groupSchedules/:groupId', groupSchedules.getSchedules);
+  app.post('/api/groupSchedules', groupSchedules.createSchedulePeriod);
+  app.get('/api/groupSchedules/:id', groupSchedules.getSchedule);
+  app.delete('/api/groupSchedules/:id', groupSchedules.deleteSchedulePeriod);
 
   app.post('/login', auth.authenticate);
   app.post('/logout', function(req, res) {

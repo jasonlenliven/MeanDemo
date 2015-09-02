@@ -8,6 +8,7 @@
                 th Name
                 th Description
                 th Link to members
+                th Link to schedule periods
                 th Link to group schedule
                 th
         tbody
@@ -17,6 +18,8 @@
                 td {{group.description}}
                 td
                     a(href="/schedule/member/group/{{group._id}}") Members
+                td
+                    a(href="/schedule/schedule_periods/{{group._id}}") Schedule Periods
                 td
                     a(href="/schedule/groupAvailability/{{group._id}}/{{year}}/{{month}}") Group Schedule
                 td

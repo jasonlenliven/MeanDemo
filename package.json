@@ -22,7 +22,8 @@
     "morgan": "^1.5.2",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
-    "stylus": "^0.51.1"
+    "stylus": "^0.51.1",
+    "mongodb": "~2.0"
   },
   "devDependencies": {
     "jasmine-core": "^2.3.4",
