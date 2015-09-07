@@ -8,6 +8,12 @@
                     .col-md-10
                         input.form-control(name="name", type="text", placeholder="Name", ng-model="name", required)
                 .form-group
+                    label.col-md-2.control-label(for="member_type") Member type
+                    .col-md-10
+                        select.form-control(name="member_type", type="select", placeholder="", ng-model="member_type")
+                            option(value='Doctors') Doctors
+                            option(value='Nurses') Nurses
+                .form-group
                     label.col-md-2.control-label(for="description") Description
                     .col-md-10
                         input.form-control(name="description", type="text", placeholder="", ng-model="description")

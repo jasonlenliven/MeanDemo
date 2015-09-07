@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var groupSchema = mongoose.Schema({
   name: {type: String, required: '{PATH} is required'},
+  member_type: {type: String},
   description: {type: String},
   manager_first_name: {type: String, required: '{PATH} is required'},
   manager_last_name: {type: String, required: '{PATH} is required'},

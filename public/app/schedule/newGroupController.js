@@ -4,6 +4,7 @@ angular.module('app').controller('newGroupController', function($scope, mvGroup,
     var newUserData = {
       name: $scope.name,
       description: $scope.description,
+      member_type: $scope.member_type,
       manager_first_name: $scope.manager_first_name,
       manager_last_name: $scope.manager_last_name,
       manager_email: $scope.manager_email,
