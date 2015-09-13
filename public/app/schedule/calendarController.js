@@ -1,6 +1,6 @@
 //angular.module('app').value('moment', moment);
 
-angular.module('app').controller('calendarController', function ($scope, mvCalendar, $routeParams) {
+angular.module('app').controller('calendarController', function ($scope, mvCalendar, mvGroup, $routeParams) {
 
   $scope.events = [];
   $scope.eventSources = [$scope.events];
@@ -16,6 +16,10 @@ angular.module('app').controller('calendarController', function ($scope, mvCalen
 
     });
   }
+
+  mvGroup.get({id:$routeParams.groupId}, function(group) {
+    $scope.groupName = group.name;
+  })
 
   /* config object */
   $scope.uiConfig = {

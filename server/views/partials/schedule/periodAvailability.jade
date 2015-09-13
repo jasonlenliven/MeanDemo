@@ -1,0 +1,12 @@
+.container
+    h3.center {{group.name}}
+    h4.center Period from {{period.startDate | date : format : timezone}} to {{period.endDate | date : format : timezone}}
+    table.table.table-hover.table-striped.table-condensed(ng-table="tableParams")
+        thead
+            tr
+                th Name
+                th(ng-repeat="day in days") {{day.day}} {{day.name}}
+        tbody
+            tr(ng-repeat="member in members | orderBy: 'lastName' ")
+                td {{member.firstName}} {{member.lastName}}
+                td(ng-repeat="day in days")

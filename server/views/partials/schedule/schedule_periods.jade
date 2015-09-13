@@ -15,7 +15,7 @@
                 td {{ period.startDate | date : format : timezone}}
                 td {{ period.endDate | date : format : timezone}}
                 td
-                    a(href="/schedule/periodAvailability/{{period.id}}") Members Availabilities
+                    a(href="/schedule/periodAvailability/{{period.group_id}}/{{period._id}}") Members Availabilities
                 td
                     a(href="/schedule/groupAvailability/{{period.group_id}}/{{period.id}}") Group Schedule
                 td

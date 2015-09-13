@@ -138,13 +138,13 @@ angular.module('app').factory('mvScheduleGenerator', function (mvWorkLoad, mvDat
       var nextDate = new Date();
       nextDate.setDate(date.getDate() + 1);
       if (!mvDateHelper.isWeekend(nextDate)) {
-        incrementRank(member, -1, date.getDay());
+        //incrementRank(member, -1, date.getDay());
       }
     }
 
     // if work enough days, decrement rank
-    if(dayCounts[member.id] >= averageDayCounts) {
-      incrementRank(member, -1, date.getDay());
+    if(dayCounts[member.id] >= (averageDayCounts-1)) {
+      incrementRank(member, -2, date.getDay());
     }
   }
 

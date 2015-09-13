@@ -30,19 +30,24 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
           var naColor = 'red';
           var member = result[index];
           members.push(member.member);
-          var title = member.member.prefix + ' ' + member.member.lastName;
+          var title;
+          if (member.member.prefix) {
+            title = member.member.prefix + ' ' + member.member.lastName;
+          } else {
+            title = member.member.lastName;
+          }
           if (member.preferWorkDays) {
             var preferWorkDays = member.preferWorkDays;
 
             for (var j = 0; j < preferWorkDays.length; j++) {
               var dayStart = parseInt(preferWorkDays[j]);
               var dayEnd = dayStart + 1;
-              //events.push({
-              //  title: title,
-              //  start: new Date(year, month, dayStart),
-              //  end: new Date(year, month, dayEnd),
-              //  color: 'orange'
-              //});
+              events.push({
+                title: title,
+                start: new Date(year, month, dayStart),
+                end: new Date(year, month, dayEnd),
+                color: 'orange'
+              });
 
               availabilities[dayStart-1].value.push(member.member);
             }
@@ -52,12 +57,12 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
             for (var j = 0; j < notAvailDays.length; j++) {
               var dayStart = parseInt(notAvailDays[j]);
               var dayEnd = dayStart + 1;
-              //events.push({
-              //  title: title,
-              //  start: new Date(year, month, dayStart),
-              //  end: new Date(year, month, dayEnd),
-              //  color: naColor
-              //});
+              events.push({
+                title: title,
+                start: new Date(year, month, dayStart),
+                end: new Date(year, month, dayEnd),
+                color: naColor
+              });
 
               nonavailabilities[dayStart-1].value.push(member.member);
             }
@@ -67,12 +72,12 @@ angular.module('app').factory('mvCalendar', function ($http, identity, $q, mvGro
             for (var j = 0; j < member.preferOffDays.length; j++) {
               var dayStart = parseInt(notAvailDays[j]);
               var dayEnd = dayStart + 1;
-              //events.push({
-              //  title: title,
-              //  start: new Date(year, month, dayStart),
-              //  end: new Date(year, month, dayEnd),
-              //  color: naColor
-              //});
+              events.push({
+                title: title,
+                start: new Date(year, month, dayStart),
+                end: new Date(year, month, dayEnd),
+                color: naColor
+              });
 
               preferOffDays[dayStart-1].value.push(member.member);
             }

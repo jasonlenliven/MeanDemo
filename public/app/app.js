@@ -28,6 +28,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
       .when('/schedule/member_new', { templateUrl: '/partials/schedule/member_new', controller: 'newMemberController', resolve: routeRoleChecks.group_manager})
       .when('/schedule/schedule_periods/:groupId', { templateUrl: '/partials/schedule/schedule_periods', controller: 'schedulePeriodController', resolve: routeRoleChecks.group_manager})
       .when('/schedule/schedule_period_new/:groupId', { templateUrl: '/partials/schedule/schedule_period_new', controller: 'newSchedulePeriodController', resolve: routeRoleChecks.group_manager})
+      .when('/schedule/periodAvailability/:groupId/:id', { templateUrl: '/partials/schedule/periodAvailability', controller: 'periodAvailabilityController', resolve: routeRoleChecks.group_manager})
       .when('/signup', { templateUrl: '/partials/account/signup', controller: 'signupController'})
       .when('/admin/users', { templateUrl: '/partials/admin/user-list', controller: 'userListController', resolve: routeRoleChecks.admin});
 });
