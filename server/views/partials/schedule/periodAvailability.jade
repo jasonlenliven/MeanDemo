@@ -1,12 +1,26 @@
 .container
     h3.center {{group.name}}
     h4.center Period from {{period.startDate | date : format : timezone}} to {{period.endDate | date : format : timezone}}
-    table.table.table-hover.table-striped.table-condensed(ng-table="tableParams")
-        thead
-            tr
-                th Name
-                th(ng-repeat="day in days") {{day.day}} {{day.name}}
-        tbody
-            tr(ng-repeat="member in members | orderBy: 'lastName' ")
-                td {{member.firstName}} {{member.lastName}}
-                td(ng-repeat="day in days")
+    div.table-wrapper
+        table.table.table-hover.table-striped(ng-table="tableParams")
+            thead.table-head
+                tr
+                    th Name
+                    th(ng-repeat="day in days") {{day.day}} {{day.name}}
+            tbody.table-wrapper-scroll
+                tr(ng-repeat="member in members | orderBy: 'lastName' ")
+                    td {{member.firstName}} {{member.lastName}}
+                    td(ng-repeat="day in days")
+                        select(name="avail", type="select")
+                            option(value='NA') NA
+                            option(value='AM') AM
+                            option(value='PM') PM
+    .form-group
+        .col-md-10.col-md-offset-2
+            .pull-right
+                button.btn.btn-primary(ng-click="save()") Save
+                | &nbsp;&nbsp;
+                a.btn.btn-default(href="/schedule/schedule_periods/{{group._id}}") Cancel
+    .small
+        p * Availabilities: NA-Not Available,  AM-Available for 1st shift,  PM-Available for 2nd shift
+

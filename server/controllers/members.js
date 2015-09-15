@@ -21,9 +21,11 @@ exports.getMembers = function (req, res) {
 
 exports.getMembersByGroup = function (req, res) {
   var groupId = req.params.groupId;
-  console.log('Get members by Group Id: ' + groupId);
+  var max = req.query.max ? req.query.max : 0;
+  var skip = req.query.skip ? req.query.skip : 0;
+  console.log('Get members by Group Id: ' + groupId + " max: " + max + " skip: " + skip);
   if (groupId) {
-    Member.find({group_id:groupId}).exec(function (err, collection) {
+    Member.find({group_id:groupId}).skip(skip).limit(max).exec(function (err, collection) {
       if(err) {
         console.log('Cannot find member. Group Id: ' + groupId);
         res.send({reason:err.toString()});

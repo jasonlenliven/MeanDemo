@@ -1,4 +1,4 @@
-angular.module('app').controller('periodAvailabilityController', function($scope, mvGroup, mvGroupSchedule, mvMember, NgTableParams, $routeParams) {
+angular.module('app').controller('periodAvailabilityController', function($scope, mvGroup, mvGroupSchedule, mvMember, $routeParams) {
 
   var periodId = $routeParams.id;
   var groupId = $routeParams.groupId;
@@ -18,12 +18,7 @@ angular.module('app').controller('periodAvailabilityController', function($scope
   });
 
 
-  $scope.tableParams = new NgTableParams(
-      {page: 1, count: 1}
-  );
-
-
-      function getDays(startDate, endDate) {
+  function getDays(startDate, endDate) {
     var result = new Array();
     var currentDate = new Date(startDate);
     var stopDate = new Date(endDate);
@@ -34,6 +29,13 @@ angular.module('app').controller('periodAvailabilityController', function($scope
     }
     return result;
   }
+
+  $scope.loadMore = function() {
+    var listSize = $scope.members? $scope.members.length : 0;
+    mvMember.resourceByGroup.query({groupId:groupId}, function(data) {
+      $scope.members = $scope.members.concat(data);
+    });
+  };
 
   var dayNames = new Array(
       'SU','MO', 'TU', 'WE', 'TH', 'FR', 'SA'

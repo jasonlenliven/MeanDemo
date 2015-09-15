@@ -1,4 +1,4 @@
-angular.module('app', ['ngResource', 'ngRoute', 'xeditable', 'ui.calendar']);
+angular.module('app', ['ngResource', 'ngRoute', 'xeditable', 'ui.calendar', 'infinite-scroll']);
 
 angular.module('app').config(function ($routeProvider, $locationProvider) {
   var routeRoleChecks = {
