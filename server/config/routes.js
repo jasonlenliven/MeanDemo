@@ -2,6 +2,7 @@ var auth = require('./auth'),
     users = require('../controllers/users'),
     members = require('../controllers/members'),
     memberAvailability = require('../controllers/member_availabilities'),
+    periodAvailability = require('../controllers/period_availabilities'),
     groups = require('../controllers/groups'),
     groupSchedules = require('../controllers/group_schedules'),
     mongoose = require('mongoose'),
@@ -25,6 +26,9 @@ module.exports = function(app) {
 
   app.get('/api/memberAvailability/:memberId/:year?/:month?', memberAvailability.getMemberAvailability);
   app.post('/api/memberAvailability/', memberAvailability.saveMemberAvailability);
+
+  app.get('/api/periodAvailability/:periodId', periodAvailability.getPeriodAvailability);
+  app.post('/api/periodAvailability/', periodAvailability.savePeriodAvailability);
 
   app.get('/api/groupAvailability/:groupId/:year/:month', memberAvailability.getByGroup);
 

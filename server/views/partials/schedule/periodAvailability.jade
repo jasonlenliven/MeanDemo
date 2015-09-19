@@ -8,10 +8,10 @@
                     th Name
                     th(ng-repeat="day in days") {{day.day}} {{day.name}}
             tbody.table-wrapper-scroll
-                tr(ng-repeat="member in members | orderBy: 'lastName' ")
-                    td {{member.firstName}} {{member.lastName}}
+                tr(ng-repeat="pa in periodAvail | orderBy: 'member.lastName' ")
+                    td {{pa.member.firstName}} {{pa.member.lastName}}
                     td(ng-repeat="day in days")
-                        select(name="avail", type="select")
+                        select(name="avail", type="select", ng-model="periodAvail[$parent.$index].availabilities[$index]" ng-change="periodAvail[$parent.$index].changed=true")
                             option(value='NA') NA
                             option(value='AM') AM
                             option(value='PM') PM
@@ -22,5 +22,5 @@
                 | &nbsp;&nbsp;
                 a.btn.btn-default(href="/schedule/schedule_periods/{{group._id}}") Cancel
     .small
-        p * Availabilities: NA-Not Available,  AM-Available for 1st shift,  PM-Available for 2nd shift
+        p * Availabilities: NA - Not Available,  AM - Available for 1st shift,  PM - Available for 2nd shift
 

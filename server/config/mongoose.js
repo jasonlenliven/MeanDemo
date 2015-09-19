@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
     groupModel = require('../models/Group'),
     memberModel = require('../models/Member'),
     groupScheduleModel = require('../models/GroupSchedule'),
+    periodAvailability = require('../models/PeriodAvailability'),
     memberAvailability = require('../models/MemberAvailability');
 
 module.exports = function (config) {
@@ -18,6 +19,6 @@ module.exports = function (config) {
   //groupModel.createDefaultGroups();
   //memberModel.createDefaultMembers();
   //memberAvailability.createDefaultMemberAvailabilities();
-
-}
+  //periodAvailability.createDefaultPeriodAvailabilities();
+};
 
