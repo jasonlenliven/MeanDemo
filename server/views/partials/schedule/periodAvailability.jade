@@ -11,7 +11,7 @@
                 tr(ng-repeat="pa in periodAvail | orderBy: 'member.lastName' ")
                     td {{pa.member.firstName}} {{pa.member.lastName}}
                     td(ng-repeat="day in days")
-                        select(name="avail", type="select", ng-model="periodAvail[$parent.$index].availabilities[$index]" ng-change="periodAvail[$parent.$index].changed=true")
+                        select(name="avail", type="select", ng-model="$parent.pa.availabilities[$index]" ng-change="$parent.pa.changed=true")
                             option(value='NA') NA
                             option(value='AM') AM
                             option(value='PM') PM

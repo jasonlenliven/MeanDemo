@@ -5,11 +5,11 @@ var mongoose = require('mongoose'),
 
 exports.getPeriodAvailability = function (req, res) {
   var periodId = req.params.periodId;
-  var memberId = req.query.memberId;
+  var memberId = req.params.memberId;
   var days = req.query.days;
 
   console.log('Getting Period availability. id: ' + periodId + " memberid: " + memberId);
-
+    if(memberId) {
       PeriodAvailability.findOne({period_id: periodId, 'member.id': memberId}, function (err, periodAvailability) {
         if (err) {
           console.log('Cannot get period availabilities. Period Id: ' + periodId + ", member id: " + memberId);
@@ -19,7 +19,7 @@ exports.getPeriodAvailability = function (req, res) {
 
         if (!periodAvailability) {
           console.log('member availability not found. Creating new avail.');
-          Member.findById(memberId, function(err, member) {
+          Member.findById(memberId, function (err, member) {
             if (err) {
               console.log('Cannot get member id: ' + memberId);
               res.status(400);
@@ -51,6 +51,16 @@ exports.getPeriodAvailability = function (req, res) {
           res.send(periodAvailability);
         }
       });
+    } else {
+      PeriodAvailability.find({period_id: periodId}, function (err, periodAvailabilities) {
+        if (err) {
+          console.log('Cannot get period availabilities. Period Id: ' + periodId);
+          res.status(400);
+          return res.send({reason: err.toString()});
+        }
+        res.send(periodAvailabilities);
+      })
+    }
 };
 
 

@@ -16,7 +16,7 @@ angular.module('app').controller('periodAvailabilityController',
             $scope.periodAvail = [];
 
             members.forEach(function (member, index) {
-              mvPeriodAvailability.get({
+              mvPeriodAvailability.resourceByMember.get({
                 periodId: $scope.period._id,
                 memberId: member._id,
                 days: $scope.days.length

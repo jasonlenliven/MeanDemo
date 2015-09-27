@@ -19,6 +19,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
       .when('/disclaimer', { templateUrl: '/partials/main/disclaimer', controller: 'disclaimerController', resolve: routeRoleChecks.group_manager})
       .when('/schedule/availability/:id?', { templateUrl: '/partials/schedule/member_schedule', controller: 'scheduleController', resolve: routeRoleChecks.group_manager})
       .when('/schedule/groupAvailability/:groupId/:year/:month', { templateUrl: '/partials/schedule/group_schedule', controller: 'calendarController', resolve: routeRoleChecks.group_manager})
+      .when('/schedule/periodSchedule/:groupId/:periodId', { templateUrl: '/partials/schedule/group_schedule2', controller: 'calendarController2', resolve: routeRoleChecks.group_manager})
       .when('/schedule/memberAvailability/:memberId/:year?/:month?', { templateUrl: '/partials/schedule/member_schedule', controller: 'scheduleController', resolve: routeRoleChecks.group_manager})
       .when('/schedule/member/group/:groupId', { templateUrl: '/partials/schedule/member', controller: 'memberController', resolve: routeRoleChecks.group_manager})
       .when('/schedule/member/:id', { templateUrl: '/partials/schedule/member_edit', controller: 'editMemberController', resolve: routeRoleChecks.group_manager})

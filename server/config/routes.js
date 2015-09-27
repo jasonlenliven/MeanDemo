@@ -5,6 +5,7 @@ var auth = require('./auth'),
     periodAvailability = require('../controllers/period_availabilities'),
     groups = require('../controllers/groups'),
     groupSchedules = require('../controllers/group_schedules'),
+    scheduleGenerator = require('../controllers/generator/schedule_generator'),
     mongoose = require('mongoose'),
     User = mongoose.model('User');
 
@@ -27,7 +28,7 @@ module.exports = function(app) {
   app.get('/api/memberAvailability/:memberId/:year?/:month?', memberAvailability.getMemberAvailability);
   app.post('/api/memberAvailability/', memberAvailability.saveMemberAvailability);
 
-  app.get('/api/periodAvailability/:periodId', periodAvailability.getPeriodAvailability);
+  app.get('/api/periodAvailability/:periodId/:memberId?', periodAvailability.getPeriodAvailability);
   app.post('/api/periodAvailability/', periodAvailability.savePeriodAvailability);
 
   app.get('/api/groupAvailability/:groupId/:year/:month', memberAvailability.getByGroup);
@@ -41,6 +42,8 @@ module.exports = function(app) {
   app.post('/api/groupSchedules', groupSchedules.createSchedulePeriod);
   app.get('/api/groupSchedules/:id', groupSchedules.getSchedule);
   app.delete('/api/groupSchedules/:id', groupSchedules.deleteSchedulePeriod);
+
+  app.get('/api/schedules/generate/:periodId', scheduleGenerator.generatePeriodSchedule);
 
   app.post('/login', auth.authenticate);
   app.post('/logout', function(req, res) {
