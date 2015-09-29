@@ -1,7 +1,7 @@
 .container
     .well
         fieldset
-            legend {{groupName}} Schedules
+            legend {{groupName}} Schedules - Period from {{period.startDate | date : format : timezone}} to {{period.endDate | date : format : timezone}}
             .calendar(ui-calendar="uiConfig.calendar" ng-model="eventSources")
             .col-md-5.col-md-offset-5
                 a.btn.btn-default.printButtonClass(href="javascript: window.print()") Print

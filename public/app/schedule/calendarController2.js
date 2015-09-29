@@ -5,10 +5,11 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
   $scope.events = [];
   $scope.eventSources = [$scope.events];
 
-  function getEvents() {
+  function getEvents(period) {
     $scope.events.splice(0, $scope.events.length);
-    var date = $('.calendar').fullCalendar('getDate');
-    mvCalendar2.getEvents($routeParams.groupId, $routeParams.periodId).then(function(data){
+    var days = getDays(period.startDate, period.endDate);
+
+    mvCalendar2.getEvents($routeParams.groupId, $routeParams.periodId, days).then(function(data){
 
       angular.forEach(data, function(value) {
         $scope.events.push(value);
@@ -17,9 +18,22 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
     });
   }
 
+  function getDays(startDate, endDate) {
+    var result = new Array();
+    var currentDate = new Date(startDate);
+    var stopDate = new Date(endDate);
+    while (currentDate <= stopDate) {
+      currentDate = new Date(currentDate);
+      result.push(new Date(currentDate));
+      currentDate = currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return result;
+  }
+
   mvGroup.get({id:$routeParams.groupId}, function(group) {
     $scope.groupName = group.name;
     mvGroupSchedule.groupScheduleResource.get({id:$routeParams.periodId}, function(period) {
+      $scope.period = period;
       /* config object */
       $scope.uiConfig = {
         calendar: {
@@ -51,7 +65,7 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
             }
           },
           viewRender: function(view, element) {
-            getEvents();
+            getEvents(period);
           },
           loading: function(isLoading, view) {
             if (isLoading)
