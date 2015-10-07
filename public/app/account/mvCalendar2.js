@@ -21,9 +21,10 @@ angular.module('app').factory('mvCalendar2', function ($http, identity, $q, mvPe
 
             events.push({
               title: title,
-              start: dayStart,
-              end: dayEnd,
+              start: dayStart.toLocaleString(),
+              //end: dayEnd,
               color: 'green',
+              allDay: false,
               stick : true
             });
           }
@@ -40,9 +41,10 @@ angular.module('app').factory('mvCalendar2', function ($http, identity, $q, mvPe
 
             events.push({
               title: title,
-              start: dayStart,
-              end: dayEnd,
-              color: 'green',
+              start: dayStart.toLocaleString(),
+              //end: dayEnd,
+              color: 'purple',
+              allDay: false,
               stick : true
             });
           }

@@ -5,6 +5,7 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
   $scope.events = [];
   $scope.eventSources = [$scope.events];
 
+
   function getEvents(period) {
     $scope.events.splice(0, $scope.events.length);
     var days = getDays(period.startDate, period.endDate);
@@ -14,7 +15,6 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
       angular.forEach(data, function(value) {
         $scope.events.push(value);
       });
-
     });
   }
 
@@ -30,6 +30,8 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
     return result;
   }
 
+
+
   mvGroup.get({id:$routeParams.groupId}, function(group) {
     $scope.groupName = group.name;
     mvGroupSchedule.groupScheduleResource.get({id:$routeParams.periodId}, function(period) {
@@ -40,6 +42,7 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
           height: 450,
           editable: true,
           defaultDate: period.startDate,
+          timeFormat: 'H(:mm)',
           header: {
             left: 'title',
             center: '',
@@ -60,7 +63,6 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
 
             if ((jsEvent.pageX < x1 || jsEvent.pageX > x2) ||
                 (jsEvent.pageY < y1 || jsEvent.pageY > y2)) {
-              //alert('SIII');
               $('.calendar').fullCalendar('removeEvents', event._id);
             }
           },
