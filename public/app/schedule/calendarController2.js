@@ -15,6 +15,7 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
       angular.forEach(data, function(value) {
         $scope.events.push(value);
       });
+      $("#loading").hide();
     });
   }
 
@@ -69,11 +70,11 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
           viewRender: function(view, element) {
             getEvents(period);
           },
-          loading: function(isLoading, view) {
+          loading: function(isLoading) {
             if (isLoading)
-              $('#loading').show();
+              $('.loading').show();
             else
-              $('#loading').hide();
+              $('.loading').hide();
           }
         }
       };
