@@ -3,6 +3,8 @@
         fieldset
             legend {{groupName}} Schedules
             .calendar(ui-calendar="uiConfig.calendar" ng-model="eventSources")
+            .loading(id="loading")
+                img.loading-image(id="loading-image" src="/images/load-image.gif")
             .col-md-5.col-md-offset-5
                 a.btn.btn-default.printButtonClass(href="javascript: window.print()") Print
                 | &nbsp

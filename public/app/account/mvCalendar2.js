@@ -2,9 +2,9 @@ var colors = ['green', 'orange', 'blue', 'black', 'purple', 'DimGray', 'LightPin
 
 angular.module('app').factory('mvCalendar2', function ($http, identity, $q, mvPeriodAvailability, mvPeriodScheduleGenerator) {
   return {
-    getEvents: function(groupId, periodId, days) {
+    getEvents: function(groupId, periodId, memberType, days) {
       var dfd = $q.defer();
-      var groupAvailabilities = mvPeriodScheduleGenerator.List({periodId: periodId});
+      var groupAvailabilities = mvPeriodScheduleGenerator.List({periodId: periodId, memberType: memberType});
 
       groupAvailabilities.$promise.then(function (result) {
         var events = [];

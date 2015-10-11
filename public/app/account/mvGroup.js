@@ -1,5 +1,6 @@
 angular.module('app').factory('mvGroup', function($resource, $q) {
-  return $resource('/api/groups/:id', { id: '@_id' }, {
+
+  var GroupResource = $resource('/api/groups/:id', { id: '@_id' }, {
     delete: {
       method: 'DELETE',
       url: 'groups/:id',
@@ -11,6 +12,11 @@ angular.module('app').factory('mvGroup', function($resource, $q) {
       params: {id: '@_id'}
     }
   });
+
+  GroupResource.prototype.isNurses = function() {
+    return this.member_type == 'Nurses';
+  };
+  return GroupResource;
 
   //return {
   //  resource: UserResource,

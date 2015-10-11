@@ -13,8 +13,9 @@
                     td(ng-repeat="day in days")
                         select(name="avail", type="select", ng-model="$parent.pa.availabilities[$index]" ng-change="$parent.pa.changed=true")
                             option(value='NA') NA
-                            option(value='AM') AM
-                            option(value='PM') PM
+                            option(value='Y' ng-show="!group.isNurses()") Y
+                            option(value='AM' ng-show="group.isNurses()") AM
+                            option(value='PM' ng-show="group.isNurses()") PM
     .form-group
         .col-md-10.col-md-offset-2
             .pull-right
@@ -22,5 +23,6 @@
                 | &nbsp;&nbsp;
                 a.btn.btn-default(href="/schedule/schedule_periods/{{group._id}}") Cancel
     .small
-        p * Availabilities: NA - Not Available,  AM - Available for 1st shift,  PM - Available for 2nd shift
+        p(ng-show="group.isNurses()") * Availabilities: NA - Not Available, AM - Available for 1st shift,  PM - Available for 2nd shift
+        p(ng-hide="group.isNurses()") * Availabilities: NA - Not Available, Y - Available all day
 

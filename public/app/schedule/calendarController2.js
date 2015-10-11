@@ -6,11 +6,11 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
   $scope.eventSources = [$scope.events];
 
 
-  function getEvents(period) {
+  function getEvents(period, group) {
     $scope.events.splice(0, $scope.events.length);
     var days = getDays(period.startDate, period.endDate);
 
-    mvCalendar2.getEvents($routeParams.groupId, $routeParams.periodId, days).then(function(data){
+    mvCalendar2.getEvents($routeParams.groupId, $routeParams.periodId, group.member_type, days).then(function(data){
 
       angular.forEach(data, function(value) {
         $scope.events.push(value);
@@ -68,7 +68,7 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
             }
           },
           viewRender: function(view, element) {
-            getEvents(period);
+            getEvents(period, group);
           },
           loading: function(isLoading) {
             if (isLoading)

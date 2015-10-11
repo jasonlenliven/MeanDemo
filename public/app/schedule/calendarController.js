@@ -6,6 +6,7 @@ angular.module('app').controller('calendarController', function ($scope, mvCalen
   $scope.eventSources = [$scope.events];
 
   function getEvents() {
+    $("#loading").show();
     $scope.events.splice(0, $scope.events.length);
     var date = $('.calendar').fullCalendar('getDate');
     mvCalendar.getEvents($routeParams.groupId, date.get('year'), date.get('month')).then(function(data){
@@ -13,7 +14,7 @@ angular.module('app').controller('calendarController', function ($scope, mvCalen
       angular.forEach(data, function(value, key) {
         $scope.events.push(value);
       });
-
+      $("#loading").hide();
     });
   }
 
