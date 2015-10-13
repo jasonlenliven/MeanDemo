@@ -9,7 +9,6 @@
                 th Description
                 th Link to members
                 th Link to schedule periods
-                th Link to group schedule
                 th
         tbody
             tr(ng-repeat="group in groups | orderBy: 'name' ")
@@ -20,7 +19,5 @@
                     a(href="/schedule/member/group/{{group._id}}") Members
                 td
                     a(href="/schedule/schedule_periods/{{group._id}}") Schedule Periods
-                td
-                    a(href="/schedule/groupAvailability/{{group._id}}/{{year}}/{{month}}") Group Schedule
                 td
                     button.btn.btn-primary(ng-click="delete(group)") Delete
