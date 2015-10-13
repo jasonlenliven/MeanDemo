@@ -6,6 +6,12 @@ var mongoose = require('mongoose'),
 
 
 function generateSchedule(periodAvailabilities, memberType) {
+  var firstShiftSchedule = [];
+  var secondShiftSchedule = [];
+  if (!periodAvailabilities || !periodAvailabilities.length) {
+    return [firstShiftSchedule, secondShiftSchedule];
+  }
+
   var members = [];
   var daysCount = periodAvailabilities[0].availabilities.length;
   var firstShiftAvail = [];
@@ -33,8 +39,7 @@ function generateSchedule(periodAvailabilities, memberType) {
     }
   });
 
-  var firstShiftSchedule = algorithm.generate(firstShiftAvail, members, maxConsecutiveDays);
-  var secondShiftSchedule;
+  firstShiftSchedule = algorithm.generate(firstShiftAvail, members, maxConsecutiveDays);
   if (isNurses) {
     secondShiftSchedule = algorithm.generate(secondShiftAvail, members, maxConsecutiveDays);
   }

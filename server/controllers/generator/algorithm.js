@@ -159,27 +159,7 @@ function getFitness(schedule) {
       score += 3 * (consecutiveDays);
     }
 
-    //var currentWorker = schedule[i];
-    //if (i < (schedule.length - 2)) {
-    //  var nextDayWorker = schedule[i+1];
-    //  var nextNextDayWorker = schedule[i+2];
-    //  if (currentWorker && currentWorker.id && nextDayWorker && nextNextDayWorker &&
-    //      ((currentWorker.id == nextDayWorker.id) && (currentWorker.id  == nextNextDayWorker.id))) {
-    //    if (i < (schedule.length - 3)) {
-    //      var nextNextNextDayWorker = schedule[i+3];
-    //      if (nextNextNextDayWorker && (currentWorker.id == nextNextNextDayWorker.id)) {
-    //        //console.log("Working more than 3 days in a row. " + currentWorker.firstName + " " + currentWorker.lastName);
-    //        score -= -10;
-    //      } else {
-    //        //console.log("Working 3 days in a row. " + currentWorker.firstName + " " + currentWorker.lastName);
-    //        score += 1;
-    //      }
-    //    } else {
-    //      //console.log("Working 3 days in a row. " + currentWorker.firstName + " " + currentWorker.lastName);
-    //      score +=1;
-    //    }
-    //  }
-    //}
+
   }
 
 
