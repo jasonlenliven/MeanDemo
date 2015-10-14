@@ -4,6 +4,7 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
 
   $scope.events = [];
   $scope.eventSources = [$scope.events];
+  $scope.loading = false;
 
 
   function getEvents(period, group) {
@@ -15,7 +16,6 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
       angular.forEach(data, function(value) {
         $scope.events.push(value);
       });
-      $("#loading").hide();
     });
   }
 
@@ -34,6 +34,7 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
 
 
   mvGroup.get({id:$routeParams.groupId}, function(group) {
+    $scope.loading = true;
     $scope.groupName = group.name;
     mvGroupSchedule.groupScheduleResource.get({id:$routeParams.periodId}, function(period) {
       $scope.period = period;
@@ -69,12 +70,9 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
           },
           viewRender: function(view, element) {
             getEvents(period, group);
+            $scope.loading = false;
           },
           loading: function(isLoading) {
-            if (isLoading)
-              $('.loading').show();
-            else
-              $('.loading').hide();
           }
         }
       };
