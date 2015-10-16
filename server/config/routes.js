@@ -41,6 +41,7 @@ module.exports = function(app) {
   app.get('/api/groups/groupSchedules/:groupId', auth.requireRole('group_manager'), groupSchedules.getSchedules);
   app.post('/api/groupSchedules', auth.requireRole('group_manager'), groupSchedules.createSchedulePeriod);
   app.get('/api/groupSchedules/:id', auth.requireRole('group_manager'), groupSchedules.getSchedule);
+  app.put('/api/groupSchedules/:id', auth.requireRole('group_manager'), groupSchedules.updateSchedulePeriod);
   app.delete('/api/groupSchedules/:id', auth.requireRole('group_manager'), groupSchedules.deleteSchedulePeriod);
 
   app.get('/api/schedules/generate/:periodId', auth.requireRole('group_manager'), scheduleGenerator.generatePeriodSchedule);

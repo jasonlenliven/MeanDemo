@@ -1,11 +1,13 @@
 .container
     .well
         fieldset
-            legend {{groupName}} Schedules - Period from {{period.startDate | date : format : timezone}} to {{period.endDate | date : format : timezone}}
+            legend {{group.name}} Schedules - Period from {{period.startDate | date : format : timezone}} to {{period.endDate | date : format : timezone}}
             .calendar(ui-calendar="uiConfig.calendar" ng-model="eventSources")
-            .loading(id="loading" ng-show="loading")
+            .loading(id="loading" )
                 img.loading-image(id="loading-image" ng-src="/images/processing1.png")
-            .col-md-5.col-md-offset-5
+            .col-md-5.col-md-offset-4
                 a.btn.btn-default.printButtonClass(href="javascript: window.print()") Print
                 | &nbsp
-                a.btn.btn-default.printButtonClass(href="/schedule/groups") Back to Groups
+                a.btn.btn-default.printButtonClass(href="" ng-click="regenerate()") Re-generate Schedule
+                | &nbsp
+                a.btn.btn-default.printButtonClass(href="/schedule/schedule_periods/{{group._id}}") Back to group

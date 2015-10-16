@@ -5,7 +5,8 @@ var groupScheduleSchema = mongoose.Schema({
   endDate: {type: Date, required: '{PATH} is required'},
   group_id: {type: String, required: '{PATH} is required'},
   group_name: {type: String},
-  schedule: {type: Array}
+  am_schedule: {type: Array},
+  pm_schedule: {type: Array}
 });
 
 

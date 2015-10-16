@@ -4,20 +4,45 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
 
   $scope.events = [];
   $scope.eventSources = [$scope.events];
-  $scope.loading = false;
+  $scope.loading = true;
+
+
+  $scope.regenerate = function() {
+    if (confirm("Do you want to regenerate the schedule? This will replace the current schedule.")) {
+
+      $("#loading").show();
+      $scope.events.splice(0, $scope.events.length);
+      var days = getDays($scope.period.startDate, $scope.period.endDate);
+
+      mvCalendar2.regenerate($routeParams.groupId, $scope.period, $scope.group.member_type, days).then(function (data) {
+
+        angular.forEach(data, function (value) {
+          $scope.events.push(value);
+        });
+
+        $("#loading").hide();
+      });
+
+    }
+  };
 
 
   function getEvents(period, group) {
+
+    $("#loading").show();
     $scope.events.splice(0, $scope.events.length);
     var days = getDays(period.startDate, period.endDate);
 
-    mvCalendar2.getEvents($routeParams.groupId, $routeParams.periodId, group.member_type, days).then(function(data){
+    mvCalendar2.getEvents($routeParams.groupId, period, group.member_type, days).then(function(data){
 
       angular.forEach(data, function(value) {
         $scope.events.push(value);
       });
+
+      $("#loading").hide();
     });
   }
+
 
   function getDays(startDate, endDate) {
     var result = new Array();
@@ -34,8 +59,7 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
 
 
   mvGroup.get({id:$routeParams.groupId}, function(group) {
-    $scope.loading = true;
-    $scope.groupName = group.name;
+    $scope.group = group;
     mvGroupSchedule.groupScheduleResource.get({id:$routeParams.periodId}, function(period) {
       $scope.period = period;
       /* config object */
@@ -70,7 +94,6 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
           },
           viewRender: function(view, element) {
             getEvents(period, group);
-            $scope.loading = false;
           },
           loading: function(isLoading) {
           }

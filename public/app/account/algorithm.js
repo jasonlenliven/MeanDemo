@@ -2,7 +2,7 @@ angular.module('app').factory('algorithm', function() {
   var members = [];
   var tournamentSize = 5;
   var uniformRate = 0.5;
-  var mutationRate = 0.05;
+  var mutationRate = 0.1;
   var maxConsecutiveDays;
 
 
@@ -210,7 +210,7 @@ angular.module('app').factory('algorithm', function() {
       members = groupMembers;
       maxConsecutiveDays = consecutiveDays;
 
-      var population = initializePopulation(avails.length, avails);
+      var population = initializePopulation(50, avails);
       var fittest;
       var count = 0;
       while (count < 100) {

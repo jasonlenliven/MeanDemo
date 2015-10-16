@@ -27,6 +27,17 @@ exports.createSchedulePeriod = function (req, res, next) {
   })
 };
 
+exports.updateSchedulePeriod = function (req, res) {
+  var data = req.body;
+  GroupSchedule.update({_id:req.params.id}, data, function (err, schedulePeriod) {
+    if (err) {
+      res.status(400);
+      return res.send({reason:err.toString()});
+    }
+    res.send(schedulePeriod);
+  })
+};
+
 exports.deleteSchedulePeriod = function (req, res) {
   var id = req.params.id;
   console.log('Deleting period with id: ' + id);
