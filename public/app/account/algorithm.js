@@ -2,7 +2,7 @@ angular.module('app').factory('algorithm', function() {
   var members = [];
   var tournamentSize = 5;
   var uniformRate = 0.5;
-  var mutationRate = 0.1;
+  var mutationRate = 0.025;
   var maxConsecutiveDays;
 
 
@@ -35,7 +35,7 @@ angular.module('app').factory('algorithm', function() {
       tournament[i] = population[randomId];
     }
 
-    //console.log("Tournament: " + tournament);
+    //console.log("Tournament");
     // Get the fittest
     var fittest = getFittest(tournament);
     return fittest;
@@ -85,11 +85,14 @@ angular.module('app').factory('algorithm', function() {
 
   function getFittest(population) {
     var fittest = population[0];
+    var fittestVal = getFitness(fittest);
     for (var i=1; i < population.length;i++) {
-      if (getFitness(fittest) < getFitness(population[i])) {
+      if (fittestVal < getFitness(population[i])) {
         fittest = population[i];
+        fittestVal = getFitness(fittest);
       }
     }
+    //console.log("Fittest: " + fittestVal);
     return fittest;
   }
 
@@ -113,13 +116,13 @@ angular.module('app').factory('algorithm', function() {
   }
 
   function consecutiveWorkingDays(schedule, startIndex, maxDays) {
-    var days = 0;
+    var days = 1;
     if (!schedule[startIndex])
       return days;
 
     var memberId = schedule[startIndex].id;
     for (var i = startIndex + 1; i < schedule.length; i++) {
-      if (schedule[i] && schedule[i].id == memberId) {
+      if (schedule[i] && (schedule[i].id == memberId)) {
         days++;
         if (days > maxDays) {
           return days;
@@ -132,13 +135,14 @@ angular.module('app').factory('algorithm', function() {
   }
 
   function getFitness(schedule) {
-    var score = 100;
+    var score = 0;
     var memberCount = members.length;
     var days = schedule.length;
     var averageWorkingDays = Math.floor(days / memberCount);
     //console.log("Member Count: " + memberCount);
     //console.log("days: " + days);
     //console.log("Average days: " + averageWorkingDays);
+
 
     var dayCounts = []
     for (var i = 0; i < members.length; i++) {
@@ -153,8 +157,8 @@ angular.module('app').factory('algorithm', function() {
       var consecutiveDays = consecutiveWorkingDays(schedule, i, maxConsecutiveDays);
 
       if (consecutiveDays > maxConsecutiveDays) {
-        //console.log("Working more than 3 days in a row. ");
-        score -= 500;
+        score -= 5000;
+        //console.log("Working more than x days in a row. " + ". " + score);
       } else if (consecutiveDays > 1) {
         //console.log("Working x days in a row. ");
         score += 3 * (consecutiveDays);
@@ -162,8 +166,6 @@ angular.module('app').factory('algorithm', function() {
 
 
     }
-
-
 
     for (var i=0; i < schedule.length - 7; i++) {
       var map = {};
@@ -174,8 +176,8 @@ angular.module('app').factory('algorithm', function() {
           if (map[member.id]) {
             map[member.id]++;
             if (map[member.id] > maxConsecutiveDays) {
-              //console.log("Working more than x days in week. " + member.id + ". "  + member.firstName + " " + member.lastName);
-              score -= 500;
+              score -= 5000;
+              //console.log("Working more than x days in week. " + member.id + ". "  + member.firstName + " " + member.lastName + ". " + score);
             }
           } else {
             map[member.id] = 1;
@@ -189,8 +191,8 @@ angular.module('app').factory('algorithm', function() {
       for (var i = 0; i < memberCount; i++) {
         var days = dayCounts[members[i].id];
         if (days > averageWorkingDays + 1) {
-          //console.log("Working more than average. " + members[i].firstName + " " + members[i].lastName);
           score -= 50 * (days - averageWorkingDays);
+          //console.log("Working more than average. " + members[i].firstName + " " + members[i].lastName + ". " + score);
         } else if (days == averageWorkingDays) {
           score += 20;
         } else if (days < averageWorkingDays && days >= maxConsecutiveDays) {
@@ -202,6 +204,7 @@ angular.module('app').factory('algorithm', function() {
       }
     }
 
+    //console.log("Score : " + score);
     return score;
   }
 
@@ -213,13 +216,12 @@ angular.module('app').factory('algorithm', function() {
       var population = initializePopulation(50, avails);
       var fittest;
       var count = 0;
-      while (count < 100) {
+      while (count < 120) {
         count++;
         population = evolvePopulation(population, avails);
         fittest = getFittest(population);
         console.log("Generation #" + count + ". Fittest: " + getFitness(fittest));
       }
-
       return fittest;
     }
   }
