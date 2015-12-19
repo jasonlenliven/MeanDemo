@@ -64,7 +64,6 @@ footer p {
   color: #f00;
 }
 .table-wrapper {
-  height: 500px;
   overflow: scroll;
   margin-bottom: 10px;
 }
@@ -97,4 +96,22 @@ footer p {
 }
 .calendar {
   margin-bottom: 10px;
+}
+.table-fixed>thead:first-child>tr:first-child>th:first-child {
+  position: absolute;
+  display: inline-block;
+  background-color: #fffaf0;
+  width: 200px;
+}
+.table-fixed> tbody > tr > td:first-child {
+  position: absolute;
+  display: inline-block;
+  background-color: #fffaf0;
+  width: 200px;
+}
+.table-fixed>thead:first-child>tr:first-child>th:nth-child(2) {
+  padding-left: 210px;
+}
+.table-fixed> tbody > tr > td:nth-child(2) {
+  padding-left: 200px !important;
 }

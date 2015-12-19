@@ -2,7 +2,7 @@
     h3.center {{group.name}}
     h4.center Period from {{period.startDate | date : format : timezone}} to {{period.endDate | date : format : timezone}}
     div.table-wrapper
-        table.table.table-hover.table-striped(ng-table="tableParams")
+        table.table.table-hover.table-striped.table-fixed(ng-table="tableParams")
             thead.table-head
                 tr
                     th Name
