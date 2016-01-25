@@ -2,7 +2,7 @@ var colors = ['green', 'orange', 'blue', 'black', 'purple', 'DimGray', 'LightPin
 
 angular.module('app').factory('mvCalendar2', function ($http, identity, $q, mvPeriodAvailability, algorithm, mvGroupSchedule, notifier) {
 
-  function generateSchedule(periodAvailabilities, memberType) {
+  function generateSchedule(periodAvailabilities, memberType, period) {
     var firstShiftSchedule = [];
     var secondShiftSchedule = [];
     if (!periodAvailabilities || !periodAvailabilities.length) {
@@ -36,9 +36,19 @@ angular.module('app').factory('mvCalendar2', function ($http, identity, $q, mvPe
       }
     });
 
-    firstShiftSchedule = algorithm.generate(firstShiftAvail, members, maxConsecutiveDays);
+    if (period && period.am_schedule) {
+       firstShiftSchedule = algorithm.generate(firstShiftAvail, members, maxConsecutiveDays, period.am_schedule);
+    } else {
+      firstShiftSchedule = algorithm.generate(firstShiftAvail, members, maxConsecutiveDays);
+    }
+    
     if (isNurses) {
-      secondShiftSchedule = algorithm.generate(secondShiftAvail, members, maxConsecutiveDays);
+      if (period && period.pm_schedule) {
+        secondShiftSchedule = algorithm.generate(secondShiftAvail, members, maxConsecutiveDays, period.pm_schedule);
+      } else {
+      
+        secondShiftSchedule = algorithm.generate(secondShiftAvail, members, maxConsecutiveDays);
+      }
     }
 
     return [firstShiftSchedule, secondShiftSchedule];
@@ -132,7 +142,7 @@ angular.module('app').factory('mvCalendar2', function ($http, identity, $q, mvPe
 
       return dfd.promise;
     },
-    regenerate: function (groupId, period, memberType, days) {
+    regenerate: function (groupId, period, memberType, days, updateOnly) {
       var dfd = $q.defer();
       var amSchedule = [];
       var pmSchedule = [];
@@ -140,8 +150,13 @@ angular.module('app').factory('mvCalendar2', function ($http, identity, $q, mvPe
       var groupAvailabilities = mvPeriodAvailability.resource.get({periodId: period._id});
 
       groupAvailabilities.$promise.then(function (avails) {
-        var result = generateSchedule(avails, memberType);
-
+        var result;
+        if (updateOnly) {
+          result = generateSchedule(avails, memberType, period);
+        } else {
+          result = generateSchedule(avails, memberType);
+        }
+        
         amSchedule = result[0];
         pmSchedule = result[1];
         events = populateEvents(amSchedule, 'am', days);

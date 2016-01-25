@@ -8,13 +8,13 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
 
 
   $scope.regenerate = function() {
-    if (confirm("Do you want to regenerate the schedule? This will replace the current schedule.")) {
+    if (confirm("Do you want to generate a new schedule? This will replace the current schedule.")) {
 
       $("#loading").show();
       $scope.events.splice(0, $scope.events.length);
       var days = getDays($scope.period.startDate, $scope.period.endDate);
 
-      mvCalendar2.regenerate($routeParams.groupId, $scope.period, $scope.group.member_type, days).then(function (data) {
+      mvCalendar2.regenerate($routeParams.groupId, $scope.period, $scope.group.member_type, days, false).then(function (data) {
 
         angular.forEach(data, function (value) {
           $scope.events.push(value);
@@ -24,6 +24,22 @@ angular.module('app').controller('calendarController2', function ($scope, mvCale
       });
 
     }
+  };
+  
+  $scope.updateSchedule = function() {
+
+      $("#loading").show();
+      $scope.events.splice(0, $scope.events.length);
+      var days = getDays($scope.period.startDate, $scope.period.endDate);
+
+      mvCalendar2.regenerate($routeParams.groupId, $scope.period, $scope.group.member_type, days, true).then(function (data) {
+
+        angular.forEach(data, function (value) {
+          $scope.events.push(value);
+        });
+
+        $("#loading").hide();
+      });
   };
 
 

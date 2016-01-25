@@ -71,12 +71,16 @@ angular.module('app').factory('algorithm', function() {
     return schedule;
   }
 
-  function initializePopulation(size, avails) {
+  function initializePopulation(size, avails, currentSchedule) {
     var population = new Array(size);
     if (avails) {
       for (var i = 0; i < size; i++) {
         population[i] = generateRandomSchedule(avails);
       }
+    }
+    
+    if (currentSchedule) {
+      population[0] = currentSchedule;
     }
     //console.log("Population initialized. Size = " + size);
     //console.log(population);
@@ -209,11 +213,11 @@ angular.module('app').factory('algorithm', function() {
   }
 
   return {
-    generate: function (avails, groupMembers, consecutiveDays) {
+    generate: function (avails, groupMembers, consecutiveDays, currentSchedule) {
       members = groupMembers;
       maxConsecutiveDays = consecutiveDays;
 
-      var population = initializePopulation(50, avails);
+      var population = initializePopulation(50, avails, currentSchedule);
       var fittest;
       var count = 0;
       while (count < 120) {
